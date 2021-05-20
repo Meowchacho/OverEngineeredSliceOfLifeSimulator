@@ -1,0 +1,117 @@
+{
+  "port": 8082,
+  "bundles": [
+    "bundle-example-areas",
+    "bundle-example-channels",
+    "bundle-example-classes",
+    "bundle-example-combat",
+    "bundle-example-commands",
+    "bundle-example-debug",
+    "bundle-example-effects",
+    "bundle-example-input-events",
+    "bundle-example-lib",
+    "bundle-example-npc-behaviors",
+    "bundle-example-player-events",
+    "bundle-example-quests",
+    "simple-crafting",
+    "vendor-npcs",
+    "player-groups",
+    "progressive-respawn",
+    "ranvier-mongodb-datasource",
+    "telnet-networking",
+    "websocket-networking"
+  ],
+  "dataSources": {
+    "YamlArea": {
+      "require": "ranvier-datasource-file.YamlAreaDataSource"
+    },
+    "Yaml": {
+      "require": "ranvier-datasource-file.YamlDataSource"
+    },
+    "YamlDirectory": {
+      "require": "ranvier-datasource-file.YamlDirectoryDataSource"
+    },
+    "JsonDirectory": {
+      "require": "ranvier-datasource-file.JsonDirectoryDataSource"
+    },
+    "MongoDbArray": {
+      "require": "ranvier-mongodb-datasource.MongoDbArrayDatasource",
+      "config": {
+        "host": "ec2-34-208-166-42.us-west-2.compute.amazonaws.com:27017",
+        "user": "ranvierDB",
+        "pass": "beepboop",
+        "name": "ranvier"
+      }
+    },
+    "MongoDbObject": {
+      "require": "ranvier-mongodb-datasource.MongoDbObjectDatasource",
+      "config": {
+        "host": "ec2-34-208-166-42.us-west-2.compute.amazonaws.com:27017",
+        "user": "ranvierDB",
+        "pass": "beepboop",
+        "name": "ranvier"
+      }
+    }
+  },
+  "entityLoaders": {
+    "accounts": {
+      "source": "JsonDirectory",
+      "config": {
+        "path": "data/account"
+      }
+    },
+    "players": {
+      "source": "JsonDirectory",
+      "config": {
+        "path": "data/player"
+      }
+    },
+    "areas": {
+      "source": "MongoDbObject",
+      "config": {
+        "collection": "areas"
+      }
+    },
+    "rooms": {
+      "source": "MongoDbArray",
+      "config": {
+        "collection": "rooms"
+      }
+    },
+    "npcs": {
+      "source": "MongoDbArray",
+      "config": {
+        "collection": "npcs"
+      }
+    },
+    "items": {
+      "source": "MongoDbArray",
+      "config": {
+        "collection": "items"
+      }
+    },
+    "quests": {
+      "source": "MongoDbArray",
+      "config": {
+        "collection": "quests"
+      }
+    },
+    "help": {
+      "source": "YamlDirectory",
+      "config": {
+        "path": "bundles/[BUNDLE]/help"
+      }
+    }
+  },
+  "maxAccountNameLength": 20,
+  "minAccountNameLength": 3,
+  "maxPlayerNameLength": 20,
+  "minPlayerNameLength": 3,
+  "maxCharacters": 3,
+  "reportToAdmins": false,
+  "startingRoom": "limbo:white",
+  "moveCommand": "move",
+  "skillLag": 2000,
+  "defaultMaxPlayerInventory": 16,
+  "maxIdleTime": 20
+}
