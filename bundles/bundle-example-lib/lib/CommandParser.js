@@ -1,6 +1,6 @@
 'use strict';
 
-const { CommandType, Room } = require('ranvier');
+const { CommandType, Room,ChannelManager } = require('ranvier');
 
 /**
  * Interpreter.. you guessed it, interprets command input
@@ -88,7 +88,7 @@ class CommandParser {
     }
 
     // check channels
-    found = state.ChannelManager.find(command);
+    found = ChannelManager.find(command);
     if (found) {
       return {
         type: CommandType.CHANNEL,

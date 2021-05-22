@@ -3,7 +3,7 @@
 const humanize = (sec) => { return require('humanize-duration')(sec, { round: true }); };
 const sprintf = require('sprintf-js').sprintf;
 const {
-  Broadcast: B,
+  BroadcastSystem: B,
   Room,
   Item,
   ItemType,
@@ -89,7 +89,7 @@ function lookRoom(state, player) {
   }
 
   if (!player.getMeta('config.brief')) {
-    B.sayAt(player, room.description, 80);
+    B.sayAt(player, room.description, '', '', 80);
   }
 
   if (player.getMeta('config.minimap')) {
