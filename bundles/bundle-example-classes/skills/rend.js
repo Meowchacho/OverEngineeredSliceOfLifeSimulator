@@ -49,7 +49,7 @@ module.exports = {
     });
 
     Broadcast.sayAt(player, `<red>With a vicious attack you open a deep wound in <bold>${target.name}</bold>!</red>`);
-    Broadcast.sayAtExcept(player.room, `<red>${player.name} viciously rends ${target.name}.</red>`, [target, player]);
+    Broadcast.sayAtExcept(player.room, [target, player],`<red>${player.name} viciously rends ${target.name}.</red>`);
     Broadcast.sayAt(target, `<red>${player.name} viciously rends you!</red>`);
     target.addEffect(effect);
   },

@@ -51,16 +51,17 @@
         "type": "regen",
         "unique": true
       },
-      "elapsed": 2906595,
+      "elapsed": 3485971,
       "id": "regen",
       "remaining": null,
       "state": {
         "magnitude": 15,
-        "lastTick": 1513,
-        "ticks": 967
+        "lastTick": 676,
+        "ticks": 1160
       }
     }
   ],
+  "account": "Admin",
   "experience": 0,
   "inventory": {
     "items": [],
@@ -76,5 +77,13 @@
   },
   "role": 2,
   "equipment": {},
-  "channelColors": {}
+  "channelColors": {
+    "say": {
+      "pre": [
+        "bold",
+        "cyan"
+      ],
+      "msg": "cyan"
+    }
+  }
 }

@@ -1,4 +1,5 @@
 'use strict';
+const { ChannelManager } = require('ranvier');
 
 module.exports = {
   listeners: {
@@ -14,7 +15,7 @@ module.exports = {
         ],
         outputFn: message => {
           message = message.replace(/%player%/, player.name);
-          state.ChannelManager.get('say').send(state, this, message);
+          ChannelManager.get('say').send(state, this, message);
         }
       });
       this.addEffect(speak);

@@ -5,7 +5,7 @@ const { Broadcast, Logger } = require('ranvier');
 module.exports = {
   listeners: {
     spawn: state => function () {
-      Broadcast.sayAt(this.room, "A rat scurries into view.");
+      Broadcast.sayAt("npc", this.room, "A rat scurries into view.");
       Logger.log(`Spawned rat into Room [${this.room.title}]`);
     },
 
