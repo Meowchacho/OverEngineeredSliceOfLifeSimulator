@@ -1,4 +1,4 @@
-<p align="center"><img class="readme-logo" src="https://raw.githubusercontent.com/RanvierMUD/docs/master/resources/logo.png"></p>
+<p align="center"><img class="readme-logo" src="https://github.com/Meowchacho/OverEngineeredSliceOfLifeSimulator/blob/main/logo.jpg"></p>
 
 # ranvier
 
