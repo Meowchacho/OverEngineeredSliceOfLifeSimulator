@@ -1,7 +1,7 @@
 'use strict';
 
 const humanize = (sec) => { return require('humanize-duration')(sec, { round: true }); };
-const { Broadcast, Logger, SkillErrors } = require('ranvier');
+const { BroadcastSystem:B, Logger, SkillErrors } = require('ranvier');
 const ArgParser = require('../../bundle-example-lib/lib/ArgParser');
 const ItemUtil = require('../../bundle-example-lib/lib/ItemUtil');
 
@@ -12,7 +12,7 @@ const ItemUtil = require('../../bundle-example-lib/lib/ItemUtil');
 module.exports = {
   aliases: [ 'quaff', 'recite' ],
   command: state => (args, player) => {
-    const say = message => Broadcast.sayAt(player, message);
+    const say = message => B.sayAt(player, message);
 
     if (!args.length) {
       return say("Use what?");

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast } = require('ranvier');
+const { BroadcastSystem:B } = require('ranvier');
 const ItemUtil = require('../../bundle-example-lib/lib/ItemUtil');
 
 module.exports = {
@@ -8,12 +8,12 @@ module.exports = {
   usage: 'equipment',
   command: (state) => (args, player) => {
     if (!player.equipment.size) {
-      return Broadcast.sayAt(player, "You are completely naked!");
+      return B.sayAt(player, "You are completely naked!");
     }
 
-    Broadcast.sayAt(player, "Currently Equipped:");
+    B.sayAt(player, "Currently Equipped:");
     for (const [slot, item] of player.equipment) {
-      Broadcast.sayAt(player, `  <${slot}> ${ItemUtil.display(item)}`);
+      B.sayAt(player, `  <${slot}> ${ItemUtil.display(item)}`);
     }
   }
 };

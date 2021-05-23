@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast } = require('ranvier');
+const { BroadcastSystem:B } = require('ranvier');
 const ArgParser = require('../../bundle-example-lib/lib/ArgParser');
 const ItemUtil = require('../../bundle-example-lib/lib/ItemUtil');
 
@@ -10,17 +10,17 @@ module.exports = {
     args = args.trim();
 
     if (!args.length) {
-      return Broadcast.sayAt(player, 'Drop what?');
+      return B.sayAt(player, 'Drop what?');
     }
 
     if (!player.room) {
-      return Broadcast.sayAt(player, 'You are floating in the nether, it would disappear forever.');
+      return B.sayAt(player, 'You are floating in the nether, it would disappear forever.');
     }
 
     const item = ArgParser.parseDot(args, player.inventory);
 
     if (!item) {
-      return Broadcast.sayAt(player, "You aren't carrying anything like that.");
+      return B.sayAt(player, "You aren't carrying anything like that.");
     }
 
     player.removeItem(item);
@@ -32,6 +32,6 @@ module.exports = {
       npc.emit('playerDropItem', player, item);
     }
 
-    Broadcast.sayAt(player, `<green>You dropped: </green>${ItemUtil.display(item)}<green>.</green>`);
+    B.sayAt(player, `<green>You dropped: </green>${ItemUtil.display(item)}<green>.</green>`);
   }
 };

@@ -111,7 +111,7 @@ function lookRoom(state, player) {
     B.sayAt(player, '[Player] ' + otherPlayer.name + combatantsDisplay);
   });
 
-  // show all the items in the rom
+  // show all the items in the room
   room.items.forEach(item => {
     if (item.hasBehavior('resource')) {
       B.sayAt(player, `[${ItemUtil.qualityColorize(item, 'Resource')}] <magenta>${item.roomDesc}</magenta>`);

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast: B, Logger } = require('ranvier');
+const { BroadcastSystem: B, Logger } = require('ranvier');
 
 
 module.exports = {

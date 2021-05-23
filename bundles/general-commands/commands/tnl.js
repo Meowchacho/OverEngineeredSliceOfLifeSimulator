@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast } = require('ranvier');
+const { BroadcastSystem:B } = require('ranvier');
 const LevelUtil = require('../../bundle-example-lib/lib/LevelUtil');
 
 module.exports = {
@@ -10,8 +10,8 @@ module.exports = {
     const totalTnl = LevelUtil.expToLevel(player.level + 1);
     const currentPerc = player.experience ? Math.floor((player.experience / totalTnl) * 100) : 0;
 
-    Broadcast.sayAt(player, `Level: ${player.level}`);
-    Broadcast.sayAt(player, Broadcast.progress(80, currentPerc, "blue"));
-    Broadcast.sayAt(player, `${player.experience}/${totalTnl} (${currentPerc}%, ${totalTnl - player.experience} til next level)`);
+    B.sayAt(player, `Level: ${player.level}`);
+    B.sayAt(player, B.progress(80, currentPerc, "blue"));
+    B.sayAt(player, `${player.experience}/${totalTnl} (${currentPerc}%, ${totalTnl - player.experience} til next level)`);
   }
 };

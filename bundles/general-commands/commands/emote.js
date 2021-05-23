@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast } = require('ranvier');
+const { BroadcastSystem:B } = require('ranvier');
 const ArgParser = require('../../bundle-example-lib/lib/ArgParser');
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
     args = args.trim();
 
     if (!args.length) {
-      return Broadcast.sayAt(player, 'Yes, but what do you want to emote?');
+      return B.sayAt(player, 'Yes, but what do you want to emote?');
     }
 
     const FIND_TARGETS_REGEXP = /~((?:\d+\.)?[^\s.,!?"']+)/gi;
@@ -23,7 +23,7 @@ module.exports = {
       let targetNameFromInput = execResult[1];
       const target = findTarget(player, targetNameFromInput);
       if (!target) {
-        return Broadcast.sayAt(player, `I can not seem to find ${targetNameFromInput}`);
+        return B.sayAt(player, `I can not seem to find ${targetNameFromInput}`);
       } else {
         matchedTargets.push(target);
       }
@@ -36,9 +36,9 @@ module.exports = {
 
     player.room.players.forEach(presentPlayer => {
       if (presentPlayer === player) {
-        Broadcast.sayAt(player, `You emote "${emoteMessage}"`);
+        B.sayAt(player, `You emote "${emoteMessage}"`);
       } else {
-        Broadcast.sayAt(presentPlayer, emoteMessage.replace(presentPlayer.name, 'you'));
+        B.sayAt(presentPlayer, emoteMessage.replace(presentPlayer.name, 'you'));
       }
     });
   }
