@@ -37,15 +37,15 @@
   },
   "entityLoaders": {
     "accounts": {
-      "source": "JsonDirectory",
+      "source": "MongoDbObject",
       "config": {
-        "path": "data/account"
+        "collection": "accounts"
       }
     },
     "players": {
-      "source": "JsonDirectory",
+      "source": "MongoDbObject",
       "config": {
-        "path": "data/player"
+        "collection": "players"
       }
     },
     "areas": {

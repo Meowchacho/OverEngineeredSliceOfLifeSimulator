@@ -14,7 +14,7 @@ module.exports = {
         }
 
         let [messageToSet, part, color, colorTwo] = args.split(' ');
-        color = `${color} ${colorTwo}`;
+        color = `${color}${colorTwo?' ' + colorTwo:''}`;
 
         if (!messageToSet) {
             B.sayAt(player, 'Set what?');
