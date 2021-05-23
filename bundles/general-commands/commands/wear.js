@@ -1,9 +1,9 @@
 'use strict';
 
 const Ranvier = require('ranvier');
-const { Broadcast, Logger } = Ranvier;
+const { BroadcastSystem:B, Logger } = Ranvier;
 const { EquipSlotTakenError } = Ranvier.EquipErrors;
-const say = Broadcast.sayAt;
+const say = B.sayAt;
 const ItemUtil = require('../../bundle-example-lib/lib/ItemUtil');
 const ArgParser = require('../../bundle-example-lib/lib/ArgParser');
 

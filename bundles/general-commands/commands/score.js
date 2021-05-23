@@ -1,7 +1,7 @@
 'use strict';
 
 const sprintf = require('sprintf-js').sprintf;
-const { Broadcast: B } = require('ranvier');
+const { BroadcastSystem: B } = require('ranvier');
 const Combat = require('../../bundle-example-combat/lib/Combat');
 
 module.exports = {

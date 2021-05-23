@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, ItemType } = require('ranvier');
+const { BroadcastSystem:B, ItemType } = require('ranvier');
 const ArgParser = require('../../bundle-example-lib/lib/ArgParser');
 const ItemUtil = require('../../bundle-example-lib/lib/ItemUtil');
 
@@ -9,15 +9,15 @@ module.exports = {
   aliases: [ 'take', 'pick', 'loot' ],
   command : (state) => (args, player, arg0) => {
     if (!args.length) {
-      return Broadcast.sayAt(player, 'Get what?');
+      return B.sayAt(player, 'Get what?');
     }
 
     if (!player.room) {
-      return Broadcast.sayAt(player, 'You are floating in the nether, there is nothing to get.');
+      return B.sayAt(player, 'You are floating in the nether, there is nothing to get.');
     }
 
     if (player.isInventoryFull()) {
-      return Broadcast.sayAt(player, "You can't hold any more items.");
+      return B.sayAt(player, "You can't hold any more items.");
     }
 
     // 'loot' is an alias for 'get all'
@@ -42,15 +42,15 @@ module.exports = {
     // most recent corpse. See issue #247.
       container = ArgParser.parseDot(parts[1], [...player.room.items].reverse());
       if (!container) {
-        return Broadcast.sayAt(player, "You don't see anything like that here.");
+        return B.sayAt(player, "You don't see anything like that here.");
       }
 
       if (container.type !== ItemType.CONTAINER) {
-        return Broadcast.sayAt(player, `${ItemUtil.display(container)} isn't a container.`);
+        return B.sayAt(player, `${ItemUtil.display(container)} isn't a container.`);
       }
 
       if (container.closed) {
-        return Broadcast.sayAt(player, `${ItemUtil.display(container)} is closed.`);
+        return B.sayAt(player, `${ItemUtil.display(container)} is closed.`);
       }
 
       search = parts[0];
@@ -59,7 +59,7 @@ module.exports = {
 
     if (search === 'all') {
       if (!source || ![...source].length) {
-        return Broadcast.sayAt(player, "There isn't anything to take.");
+        return B.sayAt(player, "There isn't anything to take.");
       }
 
       for (let item of source) {
@@ -69,7 +69,7 @@ module.exports = {
         }
 
         if (player.isInventoryFull()) {
-          return Broadcast.sayAt(player, "You can't carry any more.");
+          return B.sayAt(player, "You can't carry any more.");
         }
 
         pickup(item, container, player);
@@ -80,7 +80,7 @@ module.exports = {
 
     const item = ArgParser.parseDot(search, source);
     if (!item) {
-      return Broadcast.sayAt(player, "You don't see anything like that here.");
+      return B.sayAt(player, "You don't see anything like that here.");
     }
 
     pickup(item, container, player);
@@ -90,7 +90,7 @@ module.exports = {
 
 function pickup(item, container, player) {
   if (item.metadata.noPickup) {
-    return Broadcast.sayAt(player, `${ItemUtil.display(item)} can't be picked up.`);
+    return B.sayAt(player, `${ItemUtil.display(item)} can't be picked up.`);
   }
 
   if (container) {
@@ -100,7 +100,7 @@ function pickup(item, container, player) {
   }
   player.addItem(item);
 
-  Broadcast.sayAt(player, `<green>You receive loot: </green>${ItemUtil.display(item)}<green>.</green>`);
+  B.sayAt(player, `<green>You receive loot: </green>${ItemUtil.display(item)}<green>.</green>`);
 
   item.emit('get', player);
   player.emit('get', item);

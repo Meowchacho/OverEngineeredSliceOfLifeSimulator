@@ -1,7 +1,7 @@
 'use strict';
 
 const sprintf = require('sprintf-js').sprintf;
-const { Broadcast } = require('ranvier');
+const { BroadcastSystem:B } = require('ranvier');
 
 function sayAtColumns (source, strings, numCols) {
   //Build a 2D map of strings by col/row
@@ -33,14 +33,14 @@ function sayAtColumns (source, strings, numCols) {
     if (columnedStrings[col] && columnedStrings[col][row]) {
       const string = columnedStrings[col][row];
       said.push(string);
-      Broadcast.at(source, sprintf("%-" + colWidth + "s", string));
+      B.at(source, sprintf("%-" + colWidth + "s", string));
     }
     i++;
 
 
     col++;
     if (col == numCols) {
-      Broadcast.sayAt(source);
+      B.sayAt(source);
       col = 0;
       row++;
     }
@@ -48,7 +48,7 @@ function sayAtColumns (source, strings, numCols) {
 
   // append another line if need be
   if ((col) % numCols !== 0) {
-    Broadcast.sayAt(source);
+    B.sayAt(source);
   }
 }
 
@@ -57,8 +57,8 @@ module.exports = {
   command: (state) => (args, player) => {
 
     // print standard commands
-    Broadcast.sayAt(player, "<bold><white>                  Commands</bold></white>");
-    Broadcast.sayAt(player, "<bold><white>===============================================</bold></white>");
+    B.sayAt(player, "<bold><white>                  Commands</bold></white>");
+    B.sayAt(player, "<bold><white>===============================================</bold></white>");
 
     let commands = [];
     for (let [ name, command ] of state.CommandManager.commands) {
@@ -71,9 +71,9 @@ module.exports = {
     sayAtColumns(player, commands, 4)
 
     // channels
-    Broadcast.sayAt(player);
-    Broadcast.sayAt(player, "<bold><white>                  Channels</bold></white>");
-    Broadcast.sayAt(player, "<bold><white>===============================================</bold></white>");
+    B.sayAt(player);
+    B.sayAt(player, "<bold><white>                  Channels</bold></white>");
+    B.sayAt(player, "<bold><white>===============================================</bold></white>");
 
     let i = 0;
     let channelCommands = [];
@@ -84,8 +84,7 @@ module.exports = {
     channelCommands.sort();
     sayAtColumns(player, channelCommands, 4)
 
-
     // end with a line break
-    Broadcast.sayAt(player, '');
+    B.sayAt(player, '');
   }
 };

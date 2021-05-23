@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast: B } = require('ranvier');
+const { BroadcastSystem: B } = require('ranvier');
 
 module.exports = {
   usage: 'map',
