@@ -1,8 +1,8 @@
 ---
-name: 'Idea: Areas'
-about: Suggest an idea for new areas or changes to how areas work.
+name: 'Idea: Systems'
+about: Suggest an idea for new systems, or changes to existing ones!
 title: ''
-labels: 'Idea: Areas'
+labels: 'Idea: Systems'
 assignees: Meowchacho
 
 ---

@@ -1,8 +1,8 @@
 ---
-name: 'Idea: Areas'
-about: Suggest an idea for new areas or changes to how areas work.
+name: 'Idea: Command'
+about: Suggest a new command, or changes to an existing one!
 title: ''
-labels: 'Idea: Areas'
+labels: 'Idea: Commands'
 assignees: Meowchacho
 
 ---

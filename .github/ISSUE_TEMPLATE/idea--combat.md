@@ -1,8 +1,8 @@
 ---
-name: 'Idea: Areas'
-about: Suggest an idea for new areas or changes to how areas work.
+name: 'Idea: Combat'
+about: Suggest an idea or change related to how combat works!
 title: ''
-labels: 'Idea: Areas'
+labels: 'Idea: Combat'
 assignees: Meowchacho
 
 ---
