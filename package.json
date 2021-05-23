@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "commander": "^2.19.0",
+    "dotenv": "^10.0.0",
     "optimist": "",
     "query-string": "^7.0.0",
     "ranvier": "Meowchacho/core.git#master",

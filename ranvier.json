@@ -33,24 +33,6 @@
     },
     "JsonDirectory": {
       "require": "ranvier-datasource-file.JsonDirectoryDataSource"
-    },
-    "MongoDbArray": {
-      "require": "ranvier-mongodb-datasource.MongoDbArrayDatasource",
-      "config": {
-        "host": "ec2-34-208-166-42.us-west-2.compute.amazonaws.com:27017",
-        "user": "ranvierDB",
-        "pass": "beepboop",
-        "name": "ranvier"
-      }
-    },
-    "MongoDbObject": {
-      "require": "ranvier-mongodb-datasource.MongoDbObjectDatasource",
-      "config": {
-        "host": "ec2-34-208-166-42.us-west-2.compute.amazonaws.com:27017",
-        "user": "ranvierDB",
-        "pass": "beepboop",
-        "name": "ranvier"
-      }
     }
   },
   "entityLoaders": {
