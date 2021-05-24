@@ -14,8 +14,8 @@ module.exports = [
   new Channel({
     name: 'chat',
     aliases: ['.'],
-    prefixColor: ['bold', 'white'],
-    messageColor: 'cyan',
+    prefixColor: '{W',
+    messageColor: '{C',
     suffix: '',
     description: 'Chat with everyone on the game',
     audience: new WorldAudience()
@@ -23,8 +23,8 @@ module.exports = [
 
   new Channel({
     name: 'say',
-    prefixColor: ['bold', 'green'],
-    messageColor: 'green',
+    prefixColor: '{G',
+    messageColor: '{g',
     description: 'Send a message to all players in your room',
     audience: new RoomAudience(),
     prefixToSource: '`You say \'`',
@@ -34,8 +34,8 @@ module.exports = [
 
   new Channel({
     name: 'tell',
-    prefixColor: ['bold', 'white'],
-    messageColor: 'white',
+    prefixColor: '{W',
+    messageColor: '{w',
     description: 'Send a private message to another player',
     prefixToSource: '`You tell ${this.audience.getBroadcastTargets()[0].name} \'`',
     prefixToTarget:'`${sender.name} tells you, \'`',

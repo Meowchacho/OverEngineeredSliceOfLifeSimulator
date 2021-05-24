@@ -8,13 +8,13 @@ const sprintf = require('sprintf-js').sprintf;
 const { Broadcast: B, ItemType } = require('ranvier');
 
 const qualityColors = {
-  poor: ['bold', 'black'],
-  common: ['bold', 'white'],
-  uncommon: ['bold', 'green'],
-  rare: ['bold', 'blue'],
-  epic: ['bold', 'magenta'],
-  legendary: ['bold', 'red'],
-  artifact: ['yellow'],
+  poor: '{w',
+  common: '{W',
+  uncommon: '{G',
+  rare: '{B',
+  epic: '{M',
+  legendary: '{R',
+  artifact: '{Y',
 };
 exports.qualityColors = qualityColors;
 
@@ -25,9 +25,9 @@ exports.qualityColors = qualityColors;
  * @return string
  */
 function qualityColorize(item, string) {
-  const colors = qualityColors[item.metadata.quality || 'common'];
-  const open = '<' + colors.join('><') + '>';
-  const close = '</' + colors.reverse().join('></') + '>';
+  const color = qualityColors[item.metadata.quality || 'common'];
+  const open = color;
+  const close = '{x';
   return open + string + close;
 }
 exports.qualityColorize = qualityColorize;
@@ -90,13 +90,13 @@ exports.renderItem = function (state, item, player) {
     props.specialEffects.forEach(effectText => {
       const text = B.wrap(effectText, 36).split(/\r\n/g);
       text.forEach(textLine => {
-        buf += sprintf('| <b><green>%-36s</green></b> |\r\n', textLine);
+        buf += sprintf('| {G%-36s{x} |\r\n', textLine);
       });
     });
   }
 
   if (props.level) {
-    const cantUse = props.level > player.level ? '<red>%-36s</red>' : '%-36s';
+    const cantUse = props.level > player.level ? '{r%-36s{x' : '%-36s';
     buf += sprintf(`| ${cantUse} |\r\n`, 'Requires Level ' + props.level);
   }
   buf += qualityColorize(item, "'" + B.line(38) + "'") + '\r\n';
@@ -108,12 +108,12 @@ exports.renderItem = function (state, item, player) {
       const useSpell = state.SpellManager.get(usable.spell);
       if (useSpell) {
         useSpell.options = usable.options;
-        buf += B.wrap('<b>On Use</b>: ' + useSpell.info(player), 80) + '\r\n';
+        buf += B.wrap('On Use: ' + useSpell.info(player), 80) + '\r\n';
       }
     }
 
     if (usable.effect && usable.config.description) {
-      buf += B.wrap('<b>Effect</b>: ' + usable.config.description, 80) + '\r\n';
+      buf += B.wrap('Effect: ' + usable.config.description, 80) + '\r\n';
     }
 
     if (usable.charges) {

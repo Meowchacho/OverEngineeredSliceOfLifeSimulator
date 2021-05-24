@@ -63,11 +63,11 @@ function getCompass(player) {
   });
 
   let [E, W, S, N, U, D, SW, SE, NW, NE] = exits;
-  U = U === 'U' ? '<yellow><b>U</yellow></b>' : U;
-  D = D === 'D' ? '<yellow><b>D</yellow></b>' : D;
+  U = U === 'U' ? '{YU{W' : U;
+  D = D === 'D' ? '{YD{W' : D;
 
   const line1 = `${NW}     ${N}     ${NE}`;
-  const line2 = `<yellow><b>${W}</b></yellow> <-${U}-(@)-${D}-> <yellow><b>${E}</b></yellow>`;
+  const line2 = `{Y${W}{W <-${U}-(@)-${D}-> {Y${E}`;
   const line3 = `${SW}     ${S}     ${SE}\r\n`;
 
   return [line1, line2, line3];
@@ -77,15 +77,15 @@ function lookRoom(state, player) {
   const room = player.room;
 
   if (player.room.coordinates) {
-    B.sayAt(player, '<yellow><b>' + sprintf('%-65s', room.title) + '</b></yellow>');
+    B.sayAt(player, '{Y' + sprintf('%-65s', room.title));
     B.sayAt(player, B.line(60));
   } else {
     const [ line1, line2, line3 ] = getCompass(player);
 
     // map is 15 characters wide, room is formatted to 80 character width
-    B.sayAt(player, '<yellow><b>' + sprintf('%-65s', room.title) + line1 + '</b></yellow>');
+    B.sayAt(player, '{Y' + sprintf('%-65s', room.title) + line1);
     B.sayAt(player, B.line(60) + B.line(5, ' ') + line2);
-    B.sayAt(player, B.line(65, ' ') + '<yellow><b>' + line3 + '</b></yellow>');
+    B.sayAt(player, B.line(65, ' ') + '{Y' + line3);
   }
 
   if (!player.getMeta('config.brief')) {
@@ -114,9 +114,9 @@ function lookRoom(state, player) {
   // show all the items in the room
   room.items.forEach(item => {
     if (item.hasBehavior('resource')) {
-      B.sayAt(player, `[${ItemUtil.qualityColorize(item, 'Resource')}] <magenta>${item.roomDesc}</magenta>`);
+      B.sayAt(player, `[${ItemUtil.qualityColorize(item, 'Resource')}] {m${item.roomDesc}`);
     } else {
-      B.sayAt(player, `[${ItemUtil.qualityColorize(item, 'Item')}] <magenta>${item.roomDesc}</magenta>`);
+      B.sayAt(player, `[${ItemUtil.qualityColorize(item, 'Item')}] {m${item.roomDesc}`);
     }
   });
 
@@ -137,9 +137,9 @@ function lookRoom(state, player) {
 
       let questString = '';
       if (hasNewQuest || hasActiveQuest || hasReadyQuest) {
-        questString += hasNewQuest ? '[<b><yellow>!</yellow></b>]' : '';
-        questString += hasActiveQuest ? '[<b><yellow>%</yellow></b>]' : '';
-        questString += hasReadyQuest ? '[<b><yellow>?</yellow></b>]' : '';
+        questString += hasNewQuest ? '[{Y!{x]' : '';
+        questString += hasActiveQuest ? '[{Y%{x]' : '';
+        questString += hasReadyQuest ? '[{Y?{x]' : '';
         B.at(player, questString + ' ');
       }
     }
@@ -153,25 +153,25 @@ function lookRoom(state, player) {
     let npcLabel = 'NPC';
     switch (true) {
       case (player.level  - npc.level > 4):
-        npcLabel = '<cyan>NPC</cyan>';
+        npcLabel = '{cNPC{x';
         break;
       case (npc.level - player.level > 9):
-        npcLabel = '<b><black>NPC</black></b>';
+        npcLabel = '{RNPC{x';
         break;
       case (npc.level - player.level > 5):
-        npcLabel = '<red>NPC</red>';
+        npcLabel = '{rNPC{x';
         break;
       case (npc.level - player.level > 3):
-        npcLabel = '<yellow>NPC</yellow>';
+        npcLabel = '{yNPC{x';
         break;
       default:
-        npcLabel = '<green>NPC</green>';
+        npcLabel = '{gNPC{x';
         break;
     }
     B.sayAt(player, `[${npcLabel}] ` + npc.name + combatantsDisplay);
   });
 
-  B.at(player, '[<yellow><b>Exits</yellow></b>: ');
+  B.at(player, '[{YExits{x: ');
 
   const exits = room.getExits();
   const foundExits = [];
@@ -285,5 +285,5 @@ function lookEntity(state, player, args) {
 
 function getCombatantsDisplay(entity) {
   const combatantsList = [...entity.combatants.values()].map(combatant => combatant.name);
-  return `, <red>fighting </red>${combatantsList.join("<red>,</red> ")}`;
+  return `, {rfighting ${combatantsList.join(", ")}{x`;
 }
