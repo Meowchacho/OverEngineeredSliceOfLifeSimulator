@@ -37,7 +37,7 @@ module.exports = {
       }
 
       args.account.addCharacter(args.name);
-      args.account.save();
+      state.AccountManager.save(args.account);
 
       player.setMeta('class', args.playerClass);
 

@@ -11,7 +11,7 @@ module.exports = {
     const say = EventUtil.genSay(socket);
 
     let newAccount = null;
-    write(`<bold>Do you want your account's username to be ${name}?</bold> <cyan>[y/n]</cyan> `);
+    write(`{WDo you want your new account's username to be ${name}?{x {c[y/n]{x `);
 
     socket.once('data', data => {
       data = data.toString('utf8').trim();

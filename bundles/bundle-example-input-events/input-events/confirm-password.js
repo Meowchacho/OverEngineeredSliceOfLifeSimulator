@@ -11,7 +11,7 @@ module.exports = {
     const say = EventUtil.genSay(socket);
 
     if (!args.dontwelcome) {
-      write("<cyan>Confirm your password:</cyan> ");
+      write("{cConfirm your password:{x ");
       socket.command('toggleEcho');
     }
 
@@ -19,7 +19,7 @@ module.exports = {
       socket.command('toggleEcho');
 
       if (!args.account.checkPassword(pass.toString().trim())) {
-        say("<red>Passwords do not match.</red>");
+        say("{rPasswords do not match.{x");
         return socket.emit('change-password', socket, args);
       }
 

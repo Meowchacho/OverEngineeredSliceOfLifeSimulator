@@ -90,14 +90,14 @@ module.exports = {
     options.push({
       display: 'Delete This Account',
       onSelect: () => {
-        say('<bold>By deleting this account, all the characters will be also deleted.</bold>');
-        write(`<bold>Are you sure you want to delete this account? </bold> <cyan>[Y/n]</cyan> `);
+        say('{WBy deleting this account, all the characters will be also deleted.{x');
+        write(`{WAre you sure you want to delete this account?{x {c[Y/n]{x`);
           socket.once('data', confirmation => {
             say('');
             confirmation = confirmation.toString().trim().toLowerCase();
 
             if (!/[yn]/.test(confirmation)) {
-              say('<b>Invalid Option</b>');
+              say('{WInvalid Option{x');
               return socket.emit('choose-character', socket, args);
             }
 
@@ -106,7 +106,7 @@ module.exports = {
               return socket.emit('choose-character', socket, args);
             }
 
-            say(`Deleting account <b>${account.username}</b>`);
+            say(`Deleting account {W${account.username}{x`);
             account.deleteAccount();
             say('Account deleted, it was a pleasure doing business with you.');
             socket.end();
@@ -125,9 +125,9 @@ module.exports = {
     options.forEach((opt) => {
       if (opt.onSelect) {
         optionI++;
-        say(`| <cyan>[${optionI}]</cyan> ${opt.display}`);
+        say(`| {c[${optionI}]{x ${opt.display}`);
       } else {
-        say(`| <bold>${opt.display}</bold>`);
+        say(`| {W${opt.display}{X`);
       }
     });
 

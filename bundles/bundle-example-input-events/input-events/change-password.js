@@ -11,7 +11,7 @@ module.exports = {
     const write = EventUtil.genWrite(socket);
 
     say("Your password must be at least 8 characters.");
-    write('<cyan>Enter your account password:</cyan> ');
+    write('{cEnter your account password:{x ');
 
     socket.command('toggleEcho');
     socket.once('data', pass => {
@@ -33,7 +33,7 @@ module.exports = {
       // setPassword handles hashing
       args.account.setPassword(pass);
       state.AccountManager.addAccount(args.account);
-      args.account.save();
+      state.AccountManager.save(args.account);
 
       socket.emit('confirm-password', socket, args);
     });

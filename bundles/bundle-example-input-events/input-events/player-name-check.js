@@ -10,7 +10,7 @@ module.exports = {
     const say = EventUtil.genSay(socket);
     const write  = EventUtil.genWrite(socket);
 
-    write(`<bold>${args.name} doesn't exist, would you like to create it?</bold> <cyan>[y/n]</cyan> `);
+    write(`{W${args.name} doesn't exist, would you like to create it?{x {c[y/n]{x `);
     socket.once('data', confirmation => {
       say('');
       confirmation = confirmation.toString().trim().toLowerCase();
