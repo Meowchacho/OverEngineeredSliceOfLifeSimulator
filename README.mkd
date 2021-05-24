@@ -1,6 +1,7 @@
-<p align="center"><img class="readme-logo" src="https://github.com/Meowchacho/OverEngineeredSliceOfLifeSimulator/blob/main/logo.jpg" width="300px" height="200px"></p>
+<p align="center"><img class="readme-logo" src="https://github.com/Meowchacho/OverEngineeredSliceOfLifeSimulator/blob/main/logo.jpg" width="300px" height="300px"></p>
 
-# As-of-yet-unnamed and very "Over-Engineered" Slice of Life Simulator
+# As-of-yet-unnamed
+# "Over-Engineered" Slice of Life Simulator
 
 ## Based on Ranvier
 
