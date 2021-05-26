@@ -1,0 +1,3 @@
+[submodule "bundles/oesol-telnet-networking"]
+	path = bundles/oesol-telnet-networking
+	url = https://github.com/Meowchacho/oesol-telnet-networking.git
