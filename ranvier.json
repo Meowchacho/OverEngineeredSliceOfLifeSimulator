@@ -18,7 +18,7 @@
     "player-groups",
     "progressive-respawn",
     "ranvier-mongodb-datasource",
-    "telnet-networking",
+    "oesol-telnet-networking",
     "websocket-networking"
   ],
   "dataSources": {
