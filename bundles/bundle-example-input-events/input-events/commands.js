@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast: B, CommandType, Logger, PlayerRoles, Room } = require('ranvier');
+const { BroadcastSystem: B, CommandType, Logger, PlayerRoles, Room } = require('ranvier');
 const { NoPartyError, NoRecipientError, NoMessageError } = require('ranvier').Channel;
 const { CommandParser, InvalidCommandError, RestrictedCommandError } = require('../../bundle-example-lib/lib/CommandParser');
 

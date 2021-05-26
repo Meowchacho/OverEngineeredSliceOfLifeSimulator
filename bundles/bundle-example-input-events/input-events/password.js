@@ -14,6 +14,7 @@ module.exports = {
     const write = EventUtil.genWrite(socket);
 
     let name = args.account.name;
+    socket.socket.ansiSupport = args.account.ansiSupport;
 
     if (!passwordAttempts[name]) {
       passwordAttempts[name] = 0;

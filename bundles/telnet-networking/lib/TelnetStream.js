@@ -28,12 +28,12 @@ class TelnetStream extends TransportStream
     return this.socket.writable;
   }
 
-  write(message, encoding = 'utf8') {
+  write(message, encoding = 'utf8', width = '80') {
     if (!this.writable) {
       return;
     }
 
-    this.socket.write(message, encoding);
+    this.socket.write(message, encoding, width);
   }
 
   pause() {
