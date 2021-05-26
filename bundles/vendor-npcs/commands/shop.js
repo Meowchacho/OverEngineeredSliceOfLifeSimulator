@@ -26,7 +26,7 @@ subcommands.add({
       const vendorItem = vendorConfig.items[item.entityReference];
 
       B.sayAt(player, ItemUtil.renderItem(state, item, player));
-      B.sayAt(player, `Cost: <b><white>[${friendlyCurrencyName(vendorItem.currency)}]</white></b> x ${vendorItem.cost}`);
+      B.sayAt(player, `Cost: {W[${friendlyCurrencyName(vendorItem.currency)}]{x x ${vendorItem.cost}`);
       return;
     }
 
@@ -69,14 +69,14 @@ subcommands.add({
         const vendorItem = vendorConfig.items[item.entityReference];
 
         B.sayAt(player,
-          '<yellow>|</yellow> ' +
+          '{y|{x ' +
           ItemUtil.qualityColorize(item, sprintf('%-48s', `[${item.name}]`)) +
-          sprintf(' <yellow>|</yellow> <b>%-26s</b>', B.center(26, friendlyCurrencyName(vendorItem.currency) + ' x ' + vendorItem.cost)) +
-          '<yellow>|</yellow> '
+          sprintf(' {y|{x %-26s{x', B.center(26, friendlyCurrencyName(vendorItem.currency) + ' x ' + vendorItem.cost)) +
+          '{y|{x '
         );
       }
 
-      B.sayAt(player, "'" + B.line(78, '-', 'yellow') + "'");
+      B.sayAt(player, "'" + B.line(78, '-', '{y') + "'");
       B.sayAt(player);
     }
   }
@@ -114,7 +114,7 @@ subcommands.add({
     item.hydrate(state);
     state.ItemManager.add(item);
     player.addItem(item);
-    say(player, `<green>You spend <b><white>${vendorItem.cost} ${friendlyCurrencyName(vendorItem.currency)}</white></b> to purchase ${ItemUtil.display(item)}.</green>`);
+    say(player, `{gYou spend {W${vendorItem.cost} ${friendlyCurrencyName(vendorItem.currency)}{x to purchase ${ItemUtil.display(item)}.{x`);
     player.save();
   }
 });
@@ -140,7 +140,7 @@ subcommands.add({
     }
 
     if (!['poor', 'common'].includes(item.metadata.quality || 'common') && confirm !== 'sure') {
-      return say(player, "To sell higher quality items use '<b>sell <item> sure</b>'.");
+      return say(player, "To sell higher quality items use 'sell <item> sure{x'.");
     }
 
     const currencyKey = 'currencies.' + sellable.currency;
@@ -149,7 +149,7 @@ subcommands.add({
     }
     player.setMeta(currencyKey, (player.getMeta(currencyKey) || 0) + sellable.value);
 
-    say(player, `<green>You sell ${ItemUtil.display(item)} for <b><white>${sellable.value} ${friendlyCurrencyName(sellable.currency)}</white></b>.</green>`);
+    say(player, `{gYou sell ${ItemUtil.display(item)} for {W${sellable.value} ${friendlyCurrencyName(sellable.currency)}{x.{x`);
     state.ItemManager.remove(item);
   }
 });
@@ -178,7 +178,7 @@ subcommands.add({
       return say(player, "You can't sell that item.");
     }
 
-    tell(`I could give you <b><white>${sellable.value} ${friendlyCurrencyName(sellable.currency)}</white></b> for ${ItemUtil.display(targetItem)}.</green>`);
+    tell(`I could give you {W${sellable.value} ${friendlyCurrencyName(sellable.currency)}{x for ${ItemUtil.display(targetItem)}.{x`);
   }
 });
 
@@ -199,7 +199,7 @@ module.exports = {
     const subcommand = subcommands.find(command);
 
     if (!subcommand) {
-      return say(player, "Not a valid shop command. See '<b>help shops</b>'");
+      return say(player, "Not a valid shop command. See 'help shops{x'");
     }
 
     subcommand.command(state)(vendor, commandArgs.join(' '), player);

@@ -19,7 +19,7 @@ module.exports = {
     },
 
     effectActivated: function () {
-      Broadcast.sayAt(this.target, "<bold><red>You've suffered a deep wound, it's bleeding profusely</red></bold>");
+      Broadcast.sayAt(this.target, "{RYou've suffered a deep wound, it's bleeding profusely{x");
     },
 
     effectDeactivated: function () {

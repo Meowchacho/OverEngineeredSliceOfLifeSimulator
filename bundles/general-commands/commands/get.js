@@ -100,7 +100,7 @@ function pickup(item, container, player) {
   }
   player.addItem(item);
 
-  B.sayAt(player, `<green>You receive loot: </green>${ItemUtil.display(item)}<green>.</green>`);
+  B.sayAt(player, `{gYou receive loot: {x${ItemUtil.display(item)}{g.{x`);
 
   item.emit('get', player);
   player.emit('get', item);

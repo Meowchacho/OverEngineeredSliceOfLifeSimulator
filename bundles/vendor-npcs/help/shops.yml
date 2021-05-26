@@ -4,7 +4,7 @@ body: |
   To use the shop commands you have to be in a shop.
 
   list            - List items the vendor has for sale.
-  list <search>   - View details of an item for sale, e.g., '<b>list 2.sword</b>'
+  list <search>   - View details of an item for sale, e.g., 'list 2.sword{x'
   buy <item>      - Purchase an item for sale.
   appraise <item> - Ask the vendor how much an item is worth.
   sell <item>     - Sell an item.

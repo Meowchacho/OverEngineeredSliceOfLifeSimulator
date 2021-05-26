@@ -28,11 +28,11 @@ module.exports = {
   },
   listeners: {
     effectActivated: function () {
-      Broadcast.sayAt(this.target, '<yellow>The holy judgement weakens you.</yellow>');
+      Broadcast.sayAt(this.target, '{yThe holy judgement weakens you.{x');
     },
 
     effectDeactivated: function () {
-      Broadcast.sayAt(this.target, '<yellow>You feel your strength return.</yellow>');
+      Broadcast.sayAt(this.target, '{yYou feel your strength return.{x');
     },
 
     hit: function () {

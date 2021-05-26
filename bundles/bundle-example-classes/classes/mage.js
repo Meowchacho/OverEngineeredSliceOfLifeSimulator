@@ -13,6 +13,6 @@ module.exports = {
   setupPlayer: (state, player) => {
     const mana = state.AttributeFactory.create('mana', 100);
     player.addAttribute(mana);
-    player.prompt = '[ %health.current%/%health.max% <b>hp</b> %mana.current%/%mana.max% <b>mana</b> ]';
+    player.prompt = '[ %health.current%/%health.max% hp{x %mana.current%/%mana.max% mana{x ]';
   }
 };

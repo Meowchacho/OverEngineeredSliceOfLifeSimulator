@@ -53,15 +53,15 @@ module.exports = {
 
       let buf = '';
       if (damage.source !== this) {
-        buf = `Your <b>${damage.source.name}</b> hit`;
+        buf = `Your ${damage.source.name}{x hit`;
       } else {
         buf = "You hit";
       }
 
-      buf += ` <b>${target.name}</b> for <b>${finalAmount}</b> damage.`;
+      buf += ` ${target.name}{x for ${finalAmount}{x damage.`;
 
       if (damage.metadata.critical) {
-        buf += ' <red><b>(Critical)</b></red>';
+        buf += ' {r(Critical){x';
       }
 
       B.sayAt(this, buf);
@@ -82,12 +82,12 @@ module.exports = {
 
         let buf = '';
         if (damage.source !== this) {
-          buf = `${this.name} <b>${damage.source.name}</b> hit`;
+          buf = `${this.name} ${damage.source.name}{x hit`;
         } else {
           buf = `${this.name} hit`;
         }
 
-        buf += ` <b>${target.name}</b> for <b>${finalAmount}</b> damage.`;
+        buf += ` ${target.name}{x for ${finalAmount}{x damage.`;
         B.sayAt(member, buf);
       }
     },
@@ -104,12 +104,12 @@ module.exports = {
       if (target !== this) {
         let buf = '';
         if (heal.source !== this) {
-          buf = `Your <b>${heal.source.name}</b> healed`;
+          buf = `Your ${heal.source.name}{x healed`;
         } else {
           buf = "You heal";
         }
 
-        buf += `<b> ${target.name}</b> for <b><green>${finalAmount}</green></b> ${heal.attribute}.`;
+        buf += ` ${target.name}{x for {G${finalAmount}{x ${heal.attribute}.`;
         B.sayAt(this, buf);
       }
 
@@ -125,13 +125,13 @@ module.exports = {
 
         let buf = '';
         if (heal.source !== this) {
-          buf = `${this.name} <b>${heal.source.name}</b> healed`;
+          buf = `${this.name} ${heal.source.name}{x healed`;
         } else {
           buf = `${this.name} healed`;
         }
 
-        buf += ` <b>${target.name}</b>`;
-        buf += ` for <b><green>${finalAmount}</green></b> ${heal.attribute}.`;
+        buf += ` ${target.name}{x`;
+        buf += ` for {G${finalAmount}{x ${heal.attribute}.`;
         B.sayAt(member, buf);
       }
     },
@@ -143,19 +143,19 @@ module.exports = {
 
       let buf = '';
       if (damage.attacker) {
-        buf = `<b>${damage.attacker.name}</b>`;
+        buf = `${damage.attacker.name}{x`;
       }
 
       if (damage.source !== damage.attacker) {
-        buf += (damage.attacker ? "'s " : " ") + `<b>${damage.source.name}</b>`;
+        buf += (damage.attacker ? "'s " : " ") + `${damage.source.name}{x`;
       } else if (!damage.attacker) {
         buf += "Something";
       }
 
-      buf += ` hit <b>You</b> for <b><red>${finalAmount}</red></b> damage.`;
+      buf += ` hit You{x for {R${finalAmount}{x damage.`;
 
       if (damage.metadata.critical) {
-        buf += ' <red><b>(Critical)</b></red>';
+        buf += ' {r(Critical){x';
       }
 
       B.sayAt(this, buf);
@@ -169,16 +169,16 @@ module.exports = {
 
           let buf = '';
           if (damage.attacker) {
-            buf = `<b>${damage.attacker.name}</b>`;
+            buf = `${damage.attacker.name}{x`;
           }
 
           if (damage.source !== damage.attacker) {
-            buf += (damage.attacker ? "'s " : ' ') + `<b>${damage.source.name}</b>`;
+            buf += (damage.attacker ? "'s " : ' ') + `${damage.source.name}{x`;
           } else if (!damage.attacker) {
             buf += "Something";
           }
 
-          buf += ` hit <b>${this.name}</b> for <b><red>${finalAmount}</red></b> damage`;
+          buf += ` hit ${this.name}{x for {R${finalAmount}{x damage`;
           B.sayAt(member, buf);
         }
       }
@@ -198,20 +198,20 @@ module.exports = {
       let source = '';
 
       if (heal.attacker && heal.attacker !== this) {
-        attacker = `<b>${heal.attacker.name}</b> `;
+        attacker = `${heal.attacker.name}{x `;
       }
 
       if (heal.source !== heal.attacker) {
         attacker = attacker ? attacker + "'s " : '';
-        source = `<b>${heal.source.name}</b>`;
+        source = `${heal.source.name}{x`;
       } else if (!heal.attacker) {
         source = "Something";
       }
 
       if (heal.attribute === 'health') {
-        buf = `${attacker}${source} heals you for <b><red>${finalAmount}</red></b>.`;
+        buf = `${attacker}${source} heals you for {R${finalAmount}{x.`;
       } else {
-        buf = `${attacker}${source} restores <b>${finalAmount}</b> ${heal.attribute}.`;
+        buf = `${attacker}${source} restores ${finalAmount}{x ${heal.attribute}.`;
       }
       B.sayAt(this, buf);
 
@@ -225,7 +225,7 @@ module.exports = {
           continue;
         }
 
-        let buf = `${attacker}${source} heals ${this.name} for <b><red>${finalAmount}</red></b>.`;
+        let buf = `${attacker}${source} heals ${this.name} for {R${finalAmount}{x.`;
         B.sayAt(member, buf);
       }
     },
@@ -244,13 +244,13 @@ module.exports = {
         this.removePrompt('combat');
 
         const othersDeathMessage = killer ?
-          `<b><red>${this.name} collapses to the ground, dead at the hands of ${killer.name}.</b></red>` :
-          `<b><red>${this.name} collapses to the ground, dead</b></red>`;
+          `{R${this.name} collapses to the ground, dead at the hands of ${killer.name}.{x` :
+          `{R${this.name} collapses to the ground, dead{x`;
 
         B.sayAtExcept(this.room, othersDeathMessage, (killer ? [killer, this] : this));
 
         if (this.party) {
-          B.sayAt(this.party, `<b><green>${this.name} was killed!</green></b>`);
+          B.sayAt(this.party, `{G${this.name} was killed!{x`);
         }
 
         this.setAttributeToMax('health');
@@ -263,7 +263,7 @@ module.exports = {
         this.moveTo(home, _ => {
           state.CommandManager.get('look').execute(null, this);
 
-          B.sayAt(this, '<b><red>Whoops, that sucked!</red></b>');
+          B.sayAt(this, '{RWhoops, that sucked!{x');
           if (killer && killer !== this) {
             B.sayAt(this, `You were killed by ${killer.name}.`);
           }
@@ -271,7 +271,7 @@ module.exports = {
           const lostExp = Math.floor(this.experience * 0.2);
           this.experience -= lostExp;
           this.save();
-          B.sayAt(this, `<red>You lose <b>${lostExp}</b> experience!</red>`);
+          B.sayAt(this, `{rYou lose ${lostExp}{x experience!{x`);
 
           B.prompt(this);
         });
@@ -296,7 +296,7 @@ module.exports = {
       }
 
       if (target && !this.isNpc) {
-        B.sayAt(this, `<b><red>You killed ${target.name}!</red></b>`);
+        B.sayAt(this, `{RYou killed ${target.name}!{x`);
       }
 
       this.emit('experience', xp);
@@ -319,7 +319,7 @@ function promptBuilder(promptee) {
   const getHealthPercentage = entity => Math.floor((entity.getAttribute('health') / entity.getMaxAttribute('health')) * 100);
   const formatProgressBar = (name, progress, entity) => {
     const pad = B.line(nameWidth - name.length, ' ');
-    return `<b>${name}${pad}</b>: ${progress} <b>${entity.getAttribute('health')}/${entity.getMaxAttribute('health')}</b>`;
+    return `${name}${pad}{x: ${progress} ${entity.getAttribute('health')}/${entity.getMaxAttribute('health')}{x`;
   }
 
   // Build player health bar.

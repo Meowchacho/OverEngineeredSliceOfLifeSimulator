@@ -13,7 +13,7 @@ module.exports = {
       return B.sayAt(player, "You haven't gathered any resources.");
     }
 
-    B.sayAt(player, '<b>Resources</b>');
+    B.sayAt(player, 'Resources{x');
     B.sayAt(player, B.line(40));
     let totalAmount = 0;
     for (const resourceKey in playerResources) {

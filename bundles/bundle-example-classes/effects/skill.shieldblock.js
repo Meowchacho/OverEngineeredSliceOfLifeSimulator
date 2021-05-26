@@ -25,7 +25,7 @@ module.exports = {
       this.state.remaining -= absorbed;
       currentAmount -= absorbed;
 
-      Broadcast.sayAt(this.target, `You${partial} block the attack, preventing <bold>${absorbed}</bold> damage!`);
+      Broadcast.sayAt(this.target, `You${partial} block the attack, preventing ${absorbed}{x damage!`);
       if (!this.state.remaining) {
         this.remove();
       }
@@ -40,8 +40,8 @@ module.exports = {
       if (this.target instanceof Player) {
         this.target.addPrompt('shieldblock', () => {
           const width = 60 - "Shield ".length;
-          const remaining = `<b>${this.state.remaining}/${this.state.magnitude}</b>`;
-          return "<b>Shield</b> " + Broadcast.progress(width, (this.state.remaining / this.state.magnitude) * 100, "white") + ` ${remaining}`;
+          const remaining = `${this.state.remaining}/${this.state.magnitude}{x`;
+          return "Shield{x " + Broadcast.progress(width, (this.state.remaining / this.state.magnitude) * 100, "white") + ` ${remaining}`;
         });
       }
     },

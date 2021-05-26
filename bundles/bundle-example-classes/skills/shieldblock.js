@@ -39,12 +39,12 @@ module.exports = {
     );
     effect.skill = this;
 
-    Broadcast.sayAt(player, `<b>You raise your shield, bracing for incoming attacks!</b>`);
-    Broadcast.sayAtExcept(player.room, `<b>${player.name} raises their shield, bracing for incoming damage.</b>`, [player]);
+    Broadcast.sayAt(player, `You raise your shield, bracing for incoming attacks!{x`);
+    Broadcast.sayAtExcept(player.room, `${player.name} raises their shield, bracing for incoming damage.{x`, [player]);
     player.addEffect(effect);
   },
 
   info: (player) => {
-    return `Raise your shield block damage up to <bold>${healthPercent}%</bold> of your maximum health for <bold>${duration / 1000}</bold> seconds. Requires a shield.`;
+    return `Raise your shield block damage up to ${healthPercent}%{x of your maximum health for ${duration / 1000}{x seconds. Requires a shield.`;
   }
 };

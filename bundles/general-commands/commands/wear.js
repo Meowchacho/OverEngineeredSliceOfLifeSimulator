@@ -42,6 +42,6 @@ module.exports = {
       return Logger.error(err);
     }
 
-    say(player, `<green>You equip:</green> ${ItemUtil.display(item)}<green>.</green>`);
+    say(player, `{gYou equip:{x ${ItemUtil.display(item)}{g.{x`);
   }
 };

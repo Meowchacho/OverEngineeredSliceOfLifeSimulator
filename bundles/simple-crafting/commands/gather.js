@@ -34,7 +34,7 @@ module.exports = {
         const resItem = Crafting.getResourceItem(material);
         const metaKey = `resources.${material}`;
         player.setMeta(metaKey, (player.getMeta(metaKey) || 0) + amount);
-        B.sayAt(player, `<green>You gather: ${ItemUtil.display(resItem)} x${amount}.`);
+        B.sayAt(player, `{gYou gather: ${ItemUtil.display(resItem)} x${amount}.`);
       }
     }
 

@@ -22,7 +22,7 @@ module.exports = {
         }
 
         if (!part) {
-            B.sayAt(player, `Set ${messageToSet}'s <bold>prefix</bold> or <bold>message</bold> body color?`);
+            B.sayAt(player, `Set ${messageToSet}'s prefix{x or message{x body color?`);
             return state.CommandManager.get('help').execute('colorset', player);
         }
 

@@ -46,7 +46,7 @@ module.exports = {
     }
 
     if (target === player) {
-      return B.sayAt(player, `<green>You move ${ItemUtil.display(targetItem)} from one hand to the other. That was productive.</green>`);
+      return B.sayAt(player, `{gYou move ${ItemUtil.display(targetItem)} from one hand to the other. That was productive.{x`);
     }
 
     if (target.isInventoryFull()) {
@@ -56,9 +56,9 @@ module.exports = {
     player.removeItem(targetItem);
     target.addItem(targetItem);
 
-    B.sayAt(player, `<green>You give <white>${target.name}</white>: ${ItemUtil.display(targetItem)}.</green>`);
+    B.sayAt(player, `{gYou give {w${target.name}{x: ${ItemUtil.display(targetItem)}.{x`);
     if (!target.isNpc) {
-      B.sayAt(target, `<green>${player.name} gives you: ${ItemUtil.display(targetItem)}.</green>`);
+      B.sayAt(target, `{g${player.name} gives you: ${ItemUtil.display(targetItem)}.{x`);
     }
   }
 };

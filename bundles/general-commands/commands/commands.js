@@ -57,8 +57,8 @@ module.exports = {
   command: (state) => (args, player) => {
 
     // print standard commands
-    B.sayAt(player, "<bold><white>                  Commands</bold></white>");
-    B.sayAt(player, "<bold><white>===============================================</bold></white>");
+    B.sayAt(player, "{W                  Commands{x");
+    B.sayAt(player, "{W==============================================={x");
 
     let commands = [];
     for (let [ name, command ] of state.CommandManager.commands) {
@@ -72,8 +72,8 @@ module.exports = {
 
     // channels
     B.sayAt(player);
-    B.sayAt(player, "<bold><white>                  Channels</bold></white>");
-    B.sayAt(player, "<bold><white>===============================================</bold></white>");
+    B.sayAt(player, "{W                  Channels{x");
+    B.sayAt(player, "{W==============================================={x");
 
     let i = 0;
     let channelCommands = [];

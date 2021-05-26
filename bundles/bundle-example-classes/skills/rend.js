@@ -45,16 +45,16 @@ module.exports = {
     effect.attacker = player;
 
     effect.on('effectDeactivated', _ => {
-      Broadcast.sayAt(player, `<red><b>${target.name}</b> stops bleeding.</red>`);
+      Broadcast.sayAt(player, `{r${target.name}{x stops bleeding.{x`);
     });
 
-    Broadcast.sayAt(player, `<red>With a vicious attack you open a deep wound in <bold>${target.name}</bold>!</red>`);
-    Broadcast.sayAtExcept(player.room, [target, player],`<red>${player.name} viciously rends ${target.name}.</red>`);
-    Broadcast.sayAt(target, `<red>${player.name} viciously rends you!</red>`);
+    Broadcast.sayAt(player, `{rWith a vicious attack you open a deep wound in ${target.name}{x!{x`);
+    Broadcast.sayAtExcept(player.room, [target, player],`{r${player.name} viciously rends ${target.name}.{x`);
+    Broadcast.sayAt(target, `{r${player.name} viciously rends you!{x`);
     target.addEffect(effect);
   },
 
   info: (player) => {
-    return `Tear a deep wound in your target's flesh dealing <bold>${damagePercent}%</bold> weapon damage over <bold>${duration / 1000}</bold> seconds.`;
+    return `Tear a deep wound in your target's flesh dealing ${damagePercent}%{x weapon damage over ${duration / 1000}{x seconds.`;
   }
 };

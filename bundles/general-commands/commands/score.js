@@ -9,8 +9,8 @@ module.exports = {
   command : (state) => (args, p) => {
     const say = message => B.sayAt(p, message);
 
-    say('<b>' + B.center(60, `${p.name}, level ${p.level} ${p.playerClass.config.name}`, 'green'));
-    say('<b>' + B.line(60, '-', 'green'));
+    say('' + B.center(60, `${p.name}, level ${p.level} ${p.playerClass.config.name}`, '{g'));
+    say('' + B.line(60, '-', '{g'));
 
     let stats = {
       strength: 0,
@@ -31,7 +31,7 @@ module.exports = {
     }
 
     B.at(p, sprintf(' %-9s: %12s', 'Health', `${stats.health.current}/${stats.health.max}`));
-    say('<b><green>' + sprintf(
+    say('{G' + sprintf(
       '%36s',
       'Weapon '
     ));
@@ -69,24 +69,24 @@ module.exports = {
     const weaponDamage = Combat.getWeaponDamage(p);
     const min = Combat.normalizeWeaponDamage(p, weaponDamage.min);
     const max = Combat.normalizeWeaponDamage(p, weaponDamage.max);
-    say(sprintf(' %6s:<b>%5s</b> - <b>%-5s</b> |', 'Damage', min, max));
+    say(sprintf(' %6s:%5s{x - %-5s{x |', 'Damage', min, max));
     B.at(p, sprintf('%37s', '|'));
-    say(sprintf(' %6s: <b>%12s</b> |', 'Speed', B.center(12, Combat.getWeaponSpeed(p) + ' sec')));
+    say(sprintf(' %6s: %12s{x |', 'Speed', B.center(12, Combat.getWeaponSpeed(p) + ' sec')));
 
     say(sprintf('%60s', "'" + B.line(22) + "'"));
 
-    say('<b><green>' + sprintf(
+    say('{G' + sprintf(
       '%-24s',
       ' Stats'
-    ) + '</green></b>');
+    ) + '{x');
     say('.' + B.line(22) + '.');
 
 
     const printStat = (stat, newline = true) => {
       const val = stats[stat];
-      const statColor = (val.current > val.base ? 'green' : 'white');
+      const statColor = (val.current > val.base ? '{g' : '{w');
       const str = sprintf(
-        `| %-9s : <b><${statColor}>%8s</${statColor}></b> |`,
+        `| %-9s : ${statColor}%8s${statColor}{x |`,
         stat[0].toUpperCase() + stat.slice(1),
         val.current
       );
@@ -99,11 +99,11 @@ module.exports = {
     };
 
     printStat('strength', false); // left
-    say('<b><green>' + sprintf('%36s', 'Gold ')); // right
+    say('{G' + sprintf('%36s', 'Gold ')); // right
     printStat('agility', false); // left
     say(sprintf('%36s', '.' + B.line(12) + '.')); // right
     printStat('intellect', false); // left
-    say(sprintf('%22s| <b>%10s</b> |', '', p.getMeta('currencies.gold') || 0)); // right
+    say(sprintf('%22s| %10s{x |', '', p.getMeta('currencies.gold') || 0)); // right
     printStat('stamina', false); // left
     say(sprintf('%36s', "'" + B.line(12) + "'")); // right
 

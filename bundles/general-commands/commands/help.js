@@ -37,7 +37,7 @@ function render(state, hfile) {
   const name = hfile.name;
 
   const width = 80;
-  const bar = B.line(width, '-', 'yellow') + '\r\n';
+  const bar = B.line(width, '-', '{y') + '\r\n';
 
   let header = bar + B.center(width, name, 'white') + '\r\n' + bar;
 
@@ -80,11 +80,11 @@ function searchHelpfiles(args, player, state) {
     const [ _, hfile ] = [...results][0];
     return B.sayAt(player, render(state, hfile));
   }
-  B.sayAt(player, "<yellow>---------------------------------------------------------------------------------</yellow>");
-  B.sayAt(player, "<white>Search Results:</white>");
-  B.sayAt(player, "<yellow>---------------------------------------------------------------------------------</yellow>");
+  B.sayAt(player, "{y---------------------------------------------------------------------------------{x");
+  B.sayAt(player, "{wSearch Results:{x");
+  B.sayAt(player, "{y---------------------------------------------------------------------------------{x");
 
   for (const [name, help] of results) {
-    B.sayAt(player, `<cyan>${name}</cyan>`);
+    B.sayAt(player, `{c${name}{x`);
   }
 }

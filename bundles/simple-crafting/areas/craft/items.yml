@@ -4,7 +4,7 @@
   type: RESOURCE
   roomDesc: "Green Plant"
   keywords: [ "green", "plant", "resource" ]
-  description: "An oddly bright green plant whose thorns shine as the light hits them. Perhaps you could <b><cyan>gather</cyan></b> it."
+  description: "An oddly bright green plant whose thorns shine as the light hits them. Perhaps you could {Cgather{x it."
   metadata:
     level: 1
     itemLevel: 1
@@ -21,7 +21,7 @@
   type: RESOURCE
   roomDesc: "Red Rose"
   keywords: [ "red", "rose", "resource" ]
-  description: "An oddly bright red rose whose thorns shine as the light hits them. Perhaps you could <b><cyan>gather</cyan></b> it."
+  description: "An oddly bright red rose whose thorns shine as the light hits them. Perhaps you could {Cgather{x it."
   metadata:
     level: 1
     itemLevel: 1

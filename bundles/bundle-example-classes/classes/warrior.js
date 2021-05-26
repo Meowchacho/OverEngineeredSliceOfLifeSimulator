@@ -21,6 +21,6 @@ module.exports = {
   setupPlayer: (state, player) => {
     const energy = state.AttributeFactory.create('energy', 100);
     player.addAttribute(energy);
-    player.prompt = '[ %health.current%/%health.max% <b>hp</b> %energy.current%/%energy.max% <b>energy</b> ]';
+    player.prompt = '[ %health.current%/%health.max% hp{x %energy.current%/%energy.max% energy{x ]';
   }
 };

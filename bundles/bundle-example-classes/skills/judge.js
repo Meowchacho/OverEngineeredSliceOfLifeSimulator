@@ -29,9 +29,9 @@ module.exports = {
 
     const favorRestore = new Heal('favor', favorAmount, player, this);
 
-    Broadcast.sayAt(player, `<b><yellow>Concentrated holy energy slams into ${target.name}!</yellow></b>`);
-    Broadcast.sayAtExcept(player.room, `<b><yellow>${player.name} conjures concentrated holy energy and slams it into ${target.name}!</yellow></b>`, [target, player]);
-    Broadcast.sayAt(target, `<b><yellow>${player.name} conjures concentrated holy energy and slams it into you!</yellow></b>`);
+    Broadcast.sayAt(player, `{YConcentrated holy energy slams into ${target.name}!{x`);
+    Broadcast.sayAtExcept(player.room, `{Y${player.name} conjures concentrated holy energy and slams it into ${target.name}!{x`, [target, player]);
+    Broadcast.sayAt(target, `{Y${player.name} conjures concentrated holy energy and slams it into you!{x`);
 
     damage.commit(target);
     target.addEffect(effect);
@@ -39,6 +39,6 @@ module.exports = {
   },
 
   info: (player) => {
-    return `Slam your target with holy power, dealing <b>${damagePercent}%</b> weapon damage and reducing damage of the target's next attack by <b>${reductionPercent}%</b>. Generates <b><yellow>${favorAmount}</yellow></b> Favor.`;
+    return `Slam your target with holy power, dealing ${damagePercent}%{x weapon damage and reducing damage of the target's next attack by ${reductionPercent}%{x. Generates {Y${favorAmount}{x Favor.`;
   }
 };

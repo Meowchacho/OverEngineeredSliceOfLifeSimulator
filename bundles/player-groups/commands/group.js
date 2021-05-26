@@ -14,7 +14,7 @@ subcommands.add({
     }
 
     state.PartyManager.create(player);
-    say(player, "<b><green>You created a group, invite players with '<white>group invite <name></white>'</green></b>");
+    say(player, "{GYou created a group, invite players with '{wgroup invite <name>{x'{x");
   }
 });
 
@@ -22,7 +22,7 @@ subcommands.add({
   name: 'invite',
   command: state => (args, player) => {
     if (!player.party) {
-      return say(player, "You don't have a group, create one with '<b>group create</b>'.");
+      return say(player, "You don't have a group, create one with 'group create{x'.");
     }
 
     if (player.party && player !== player.party.leader) {
@@ -47,8 +47,8 @@ subcommands.add({
       return say(player, "They are already in a group.");
     }
 
-    say(target, `<b><green>${player.name} invited you to join their group. Join/decline with '<white>group join/decline ${player.name}</white>'</green></b>`);
-    say(player, `<b><green>You invite ${target.name} to join your group.</green></b>`);
+    say(target, `{G${player.name} invited you to join their group. Join/decline with '{wgroup join/decline ${player.name}{x'{x`);
+    say(player, `{GYou invite ${target.name} to join your group.{x`);
     player.party.invite(target);
     B.prompt(target);
   }
@@ -67,10 +67,10 @@ subcommands.add({
     }
 
     if (!args || args !== 'sure') {
-      return say(player, `<b><green>You have to confirm disbanding your group with '<white>group disband sure</white>'</green></b>`);
+      return say(player, `{GYou have to confirm disbanding your group with '{wgroup disband sure{x'{x`);
     }
 
-    say(player.party, '<b><green>Your group was disbanded!</green></b>');
+    say(player.party, '{GYour group was disbanded!{x');
     state.PartyManager.disband(player.party);
   }
 });
@@ -96,8 +96,8 @@ subcommands.add({
       return say(player, "They haven't invited you to join their group.");
     }
 
-    say(player, `<b><green>You join ${target.name}'s group.</green></b>`);
-    say(target.party, `<b><green>${player.name} joined the group.</green></b>`);
+    say(player, `{GYou join ${target.name}'s group.{x`);
+    say(target.party, `{G${player.name} joined the group.{x`);
     target.party.add(player);
     player.follow(target);
   }
@@ -116,8 +116,8 @@ subcommands.add({
       return say(player, "They aren't here.");
     }
 
-    say(player, `<b><green>You decline to join ${target.name}'s group.</green></b>`);
-    say(target, `<b><green>${player.name} declined to join your group.</green></b>`);
+    say(player, `{GYou decline to join ${target.name}'s group.{x`);
+    say(target, `{G${player.name} declined to join your group.{x`);
     target.party.removeInvite(player);
   }
 });
@@ -129,13 +129,13 @@ subcommands.add({
       return say(player, "You're not in a group.");
     }
 
-    say(player, '<b>' + B.center(80, 'Group', 'green', '-') + '</b>');
+    say(player, '' + B.center(80, 'Group', 'green', '-') + '{x');
     for (const member of player.party) {
       let tag = '   ';
       if (member === player.party.leader) {
         tag = '[L]';
       }
-      say(player, `<b><green>${tag} ${member.name}</green></b>`);
+      say(player, `{G${tag} ${member.name}{x`);
     }
   }
 });
@@ -153,8 +153,8 @@ subcommands.add({
 
     const party = player.party;
     player.party.delete(player);
-    say(party, `<b><green>${player.name} left the group.</green></b>`);
-    say(player, '<b><green>You leave the group.</green></b>');
+    say(party, `{G${player.name} left the group.{x`);
+    say(player, '{GYou leave the group.{x');
   }
 });
 

@@ -28,14 +28,14 @@ module.exports = {
       type: 'holy',
     });
 
-    Broadcast.sayAt(player, `<b><yellow>Your weapon radiates holy energy and you strike ${target.name}!</yellow></b>`);
-    Broadcast.sayAtExcept(player.room, `<b><yellow>${player.name}'s weapon radiates holy energy and they strike ${target.name}!</yellow></b>`, [target, player]);
-    Broadcast.sayAt(target, `<b><yellow>${player.name}'s weapon radiates holy energy and they strike you!</yellow></b>`);
+    Broadcast.sayAt(player, `{YYour weapon radiates holy energy and you strike ${target.name}!{x`);
+    Broadcast.sayAtExcept(player.room, `{Y${player.name}'s weapon radiates holy energy and they strike ${target.name}!{x`, [target, player]);
+    Broadcast.sayAt(target, `{Y${player.name}'s weapon radiates holy energy and they strike you!{x`);
 
     damage.commit(target);
   },
 
   info: (player) => {
-    return `Empower your weapon with holy energy and strike, dealing <b>${damagePercent}%</b> weapon damage. Requires a weapon.`;
+    return `Empower your weapon with holy energy and strike, dealing ${damagePercent}%{x weapon damage. Requires a weapon.`;
   }
 };

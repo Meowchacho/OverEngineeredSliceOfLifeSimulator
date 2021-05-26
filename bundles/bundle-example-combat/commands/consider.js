@@ -37,7 +37,7 @@ module.exports = {
         description = 'They are much weaker than you. You would have no trouble dealing with a few of them at once.';
         break;
       case (target.level - player.level > 9):
-        description = 'They are <b>much</b> stronger than you. They will kill you and it will hurt the whole time you\'re dying.';
+        description = 'They are much{x stronger than you. They will kill you and it will hurt the whole time you\'re dying.';
         break;
       case (target.level - player.level > 5):
         description = 'They are quite a bit more powerful than you. You would need to get lucky to defeat them.';

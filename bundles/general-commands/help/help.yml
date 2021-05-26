@@ -1,10 +1,10 @@
 ---
 body: |
-    Type <bold><yellow>'commands'</yellow></bold> to see a list of possible commands.
+    Type {Y'commands'{x to see a list of possible commands.
 
-    Type <bold><yellow>'help [command]'</yellow></bold> to see more information about that command.
+    Type {Y'help [command]'{x to see more information about that command.
 
-    Type <bold><yellow>'help search [keyword]'</yellow></bold> to search the helpfiles by keyword.
+    Type {Y'help search [keyword]'{x to search the helpfiles by keyword.
 
     Command usage will show arguments as either [optional] or <required>, e.g., look [thing] or get <item> [container]
 related:

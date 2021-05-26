@@ -5,8 +5,8 @@ const { BroadcastSystem: B } = require('ranvier');
 module.exports = {
   usage: 'who',
   command: (state) => (args, player) => {
-    B.sayAt(player, "<bold><red>                  Who's Online</bold></red>");
-    B.sayAt(player, "<bold><red>===============================================</bold></red>");
+    B.sayAt(player, "{R                  Who's Online{x");
+    B.sayAt(player, "{R==============================================={x");
     B.sayAt(player, '');
 
     state.PlayerManager.players.forEach((otherPlayer) => {
@@ -18,8 +18,8 @@ module.exports = {
     function getRoleString(role = 0) {
       return [
         '',
-        '<white>[Builder]</white>',
-        '<b><white>[Admin]</white></b>'
+        '{w[Builder]{x',
+        '{W[Admin]{x'
       ][role] || '';
     }
   }

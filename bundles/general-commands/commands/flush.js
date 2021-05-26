@@ -9,6 +9,6 @@ module.exports = {
   usage: 'flush',
   command : (state) => (args, player) => {
     player.commandQueue.flush();
-    B.sayAt(player, '<bold><yellow>Queue flushed.</yellow></bold>');
+    B.sayAt(player, '{YQueue flushed.{x');
   }
 };

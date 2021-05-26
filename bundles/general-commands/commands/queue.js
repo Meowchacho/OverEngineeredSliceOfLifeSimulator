@@ -10,7 +10,7 @@ module.exports = {
   aliases: [ 'pending' ],
   usage: 'queue',
   command : (state) => (args, player) => {
-    B.sayAt(player, '<bold><yellow>Command Queue:</yellow></bold>');
+    B.sayAt(player, '{YCommand Queue:{x');
     if (!player.commandQueue.hasPending) {
       return B.sayAt(player, ' -) None.');
     }
@@ -21,11 +21,11 @@ module.exports = {
       const command = commands[i];
       const index = sprintf(indexToken, i + 1);
       const ttr = sprintf('%.1f', player.commandQueue.getTimeTilRun(i));
-      let buf = ` ${index}) <bold><white>${command.label}</white></bold>`;
-      buf += ` <yellow>(</yellow><bold><white>${ttr}s</white></bold><yellow>)</yellow>`;
+      let buf = ` ${index}) {W${command.label}{x`;
+      buf += ` {y({x{W${ttr}s{x{y){x`;
       B.sayAt(player, buf);
     }
 
-    B.sayAt(player, '<bold><yellow>Use the "flush" command to flush the queue</yellow></bold>');
+    B.sayAt(player, '{YUse the "flush" command to flush the queue{x');
   }
 };

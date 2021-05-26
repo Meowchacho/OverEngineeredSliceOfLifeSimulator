@@ -16,7 +16,7 @@ subcommands.add({
 
     // list categories
     if (!args || !args.length) {
-      say(player, '<b>Crafting Categories</b>');
+      say(player, 'Crafting Categories{x');
       say(player, B.line(40));
 
       return craftingCategories.forEach((category, index) => {
@@ -34,7 +34,7 @@ subcommands.add({
 
     // list items within a category
     if (!itemNumber) {
-      say(player, `<b>${category.title}</b>`);
+      say(player, `${category.title}{x`);
       say(player, B.line(40));
 
       if (!category.items.length) {
@@ -53,7 +53,7 @@ subcommands.add({
     }
 
     say(player, ItemUtil.renderItem(state, item.item, player));
-    say(player, '<b>Recipe:</b>');
+    say(player, 'Recipe:{x');
     for (const [resource, amount] of Object.entries(item.recipe)) {
       const ingredient = Crafting.getResourceItem(resource);
       say(player, `  ${ItemUtil.display(ingredient)} x ${amount}`);
@@ -106,12 +106,12 @@ subcommands.add({
     for (const [resource, amount] of Object.entries(item.recipe)) {
       player.setMeta(`resources.${resource}`, player.getMeta(`resources.${resource}`) - amount);
       const resItem = Crafting.getResourceItem(resource);
-      say(player, `<green>You spend ${amount} x ${ItemUtil.display(resItem)}.</green>`);
+      say(player, `{gYou spend ${amount} x ${ItemUtil.display(resItem)}.{x`);
     }
 
     state.ItemManager.add(item.item);
     player.addItem(item.item);
-    say(player, `<b><green>You create: ${ItemUtil.display(item.item)}.</green></b>`);
+    say(player, `{GYou create: ${ItemUtil.display(item.item)}.{x`);
     player.save();
   }
 });

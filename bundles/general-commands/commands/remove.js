@@ -18,7 +18,7 @@ module.exports = {
     }
 
     const [slot, item] = result;
-    B.sayAt(player, `<green>You un-equip: </green>${ItemUtil.display(item)}<green>.</green>`);
+    B.sayAt(player, `{gYou un-equip: {x${ItemUtil.display(item)}{g.{x`);
     player.unequip(slot);
   }
 };

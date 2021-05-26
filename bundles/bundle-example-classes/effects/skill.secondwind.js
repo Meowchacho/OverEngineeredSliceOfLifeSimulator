@@ -25,7 +25,7 @@ module.exports = {
         return;
       }
 
-      Broadcast.sayAt(this.target, "<bold><yellow>You catch a second wind!</bold></yellow>");
+      Broadcast.sayAt(this.target, "{YYou catch a second wind!{x");
       const amount = Math.floor(this.target.getMaxAttribute('energy') * (this.state.restorePercent / 100));
       const heal = new Heal('energy', amount, this.target, this.skill);
       heal.commit(this.target);

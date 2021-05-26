@@ -29,15 +29,15 @@ module.exports = {
       type: 'physical',
     });
 
-    Broadcast.sayAt(player, '<red>You shift your feet and let loose a mighty attack!</red>');
-    Broadcast.sayAtExcept(player.room, `<red>${player.name} lets loose a lunging attack on ${target.name}!</red>`, [player, target]);
+    Broadcast.sayAt(player, '{rYou shift your feet and let loose a mighty attack!{x');
+    Broadcast.sayAtExcept(player.room, `{r${player.name} lets loose a lunging attack on ${target.name}!{x`, [player, target]);
     if (!target.isNpc) {
-      Broadcast.sayAt(target, `<red>${player.name} lunges at you with a fierce attack!</red>`);
+      Broadcast.sayAt(target, `{r${player.name} lunges at you with a fierce attack!{x`);
     }
     damage.commit(target);
   },
 
   info: (player) => {
-    return `Make a strong attack against your target dealing <bold>${damagePercent}%</bold> weapon damage.`;
+    return `Make a strong attack against your target dealing ${damagePercent}%{x weapon damage.`;
   }
 };

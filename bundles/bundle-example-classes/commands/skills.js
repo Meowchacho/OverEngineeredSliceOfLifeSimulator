@@ -7,8 +7,8 @@ module.exports = {
   aliases: ['abilities', 'spells'],
   command: state => (args, player) => {
     const say = message => B.sayAt(player, message);
-    say("<b>" + B.center(80, 'Abilities', 'green'));
-    say("<b>" + B.line(80, '=', 'green'));
+    say("" + B.center(80, 'Abilities', '{g'));
+    say("" + B.line(80, '=', '{g'));
 
     for (const [ level, abilities ] of Object.entries(player.playerClass.abilityTable)) {
       abilities.skills = abilities.skills || [];
@@ -18,12 +18,12 @@ module.exports = {
         continue;
       }
 
-      say(`\r\n<bold>Level ${level}</bold>`);
+      say(`\r\nLevel ${level}{x`);
       say(B.line(50));
 
       let i = 0;
       if (abilities.skills.length) {
-        say('\r\n<bold>Skills</bold>');
+        say('\r\nSkills{x');
       }
 
       for (let skillId of abilities.skills) {
@@ -36,7 +36,7 @@ module.exports = {
 
         let name = sprintf("%-20s", skill.name);
         if (player.level >= level) {
-          name = `<green>${name}</green>`;
+          name = `{g${name}{x`;
         }
         B.at(player, name);
 
@@ -46,7 +46,7 @@ module.exports = {
       }
 
       if (abilities.spells.length) {
-        say('\r\n<bold>Spells</bold>');
+        say('\r\nSpells{x');
       }
 
       for (let spellId of abilities.spells) {
@@ -59,7 +59,7 @@ module.exports = {
 
         let name = sprintf("%-20s", spell.name);
         if (player.level >= level) {
-          name = `<green>${name}</green>`;
+          name = `{g${name}{x`;
         }
         B.at(player, name);
 

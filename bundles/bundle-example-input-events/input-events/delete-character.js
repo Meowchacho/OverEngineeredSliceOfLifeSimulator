@@ -20,15 +20,15 @@ module.exports = {
     let options = [];
     characters.forEach(char => {
       options.push({
-        display: `Delete <b>${char.username}</b>`,
+        display: `Delete ${char.username}{x`,
         onSelect: () => {
-          write(`<bold>Are you sure you want to delete <b>${char.username}</b>?</bold> <cyan>[Y/n]</cyan> `);
+          write(`Are you sure you want to delete ${char.username}{x?{x {c[Y/n]{x `);
           socket.once('data', confirmation => {
             say('');
             confirmation = confirmation.toString().trim().toLowerCase();
 
             if (!/[yn]/.test(confirmation)) {
-              say('<b>Invalid Option</b>');
+              say('Invalid Option{x');
               return socket.emit('choose-character', socket, args);
             }
 
@@ -59,9 +59,9 @@ module.exports = {
     options.forEach((opt) => {
       if (opt.onSelect) {
         optionI++;
-        say(`| <cyan>[${optionI}]</cyan> ${opt.display}`);
+        say(`| {c[${optionI}]{x ${opt.display}`);
       } else {
-        say(`| <bold>${opt.display}</bold>`);
+        say(`| ${opt.display}{x`);
       }
     });
 

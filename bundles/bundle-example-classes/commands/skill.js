@@ -20,21 +20,21 @@ module.exports = {
       return say("No such skill.");
     }
 
-    say('<b>' + B.center(80, skill.name, 'white', '-') + '</b>');
+    say('' + B.center(80, skill.name, 'white', '-') + '{x');
     if (skill.flags.includes(SkillFlag.PASSIVE)) {
-      say('<b>Passive</b>');
+      say('Passive{x');
     } else {
-      say(`<b>Usage</b>: ${skill.id}`);
+      say(`Usage{x: ${skill.id}`);
     }
 
     if (skill.resource && skill.resource.cost) {
-      say(`<b>Cost</b>: <b>${skill.resource.cost}</b> ${skill.resource.attribute}`);
+      say(`Cost{x: ${skill.resource.cost}{x ${skill.resource.attribute}`);
     }
 
     if (skill.cooldownLength) {
-      say(`<b>Cooldown</b>: <b>${skill.cooldownLength}</b> seconds`);
+      say(`Cooldown{x: ${skill.cooldownLength}{x seconds`);
     }
     say(skill.info(player), 80);
-    say('<b>' + B.line(80) + '</b>');
+    say('' + B.line(80) + '{x');
   }
 };

@@ -23,7 +23,7 @@ module.exports = {
       } else if (effect.flags.includes(EffectFlag.DEBUFF)) {
         color = 'red';
       }
-      B.at(player, `<bold><${color}>  ${effect.name}</${color}></bold>`);
+      B.at(player, `<${color}>  ${effect.name}</${color}>{x`);
       if (effect.config.maxStacks) {
         B.at(player, ` (${effect.state.stacks || 1})`);
       }

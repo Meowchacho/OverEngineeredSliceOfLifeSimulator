@@ -52,7 +52,7 @@ module.exports = {
     player.removeItem(item);
     toContainer.addItem(item);
 
-    B.sayAt(player, `<green>You put </green>${ItemUtil.display(item)}<green> into </green>${ItemUtil.display(toContainer)}<green>.</green>`);
+    B.sayAt(player, `{gYou put {x${ItemUtil.display(item)}{g into {x${ItemUtil.display(toContainer)}{g.{x`);
 
     item.emit('put', player, toContainer);
     player.emit('put', item, toContainer);

@@ -14,6 +14,6 @@ module.exports = {
     // Paladins use Favor, with a max of 10. Favor is a generated resource and returns to 0 when out of combat
     const favor = state.AttributeFactory.create('favor', 10, -10);
     player.addAttribute(favor);
-    player.prompt = '[ <b><red>%health.current%</red></b>/<red>%health.max%</red> <b>hp</b> <b><yellow>%favor.current%</yellow></b>/<yellow>%favor.max%</yellow> <b>favor</b> ]';
+    player.prompt = '[ {R%health.current%{x/{r%health.max%{x hp{x {Y%favor.current%{x/{y%favor.max%{x favor{x ]';
   }
 };

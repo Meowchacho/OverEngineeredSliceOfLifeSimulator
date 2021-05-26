@@ -32,6 +32,6 @@ module.exports = {
       npc.emit('playerDropItem', player, item);
     }
 
-    B.sayAt(player, `<green>You dropped: </green>${ItemUtil.display(item)}<green>.</green>`);
+    B.sayAt(player, `{gYou dropped: {x${ItemUtil.display(item)}{g.{x`);
   }
 };

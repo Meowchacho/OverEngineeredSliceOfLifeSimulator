@@ -28,7 +28,7 @@ module.exports = {
       map += '|';
       for (var x = coords.x - xSize; x <= coords.x + xSize; x++) {
         if (x === coords.x && y === coords.y) {
-          map += '<b><yellow>@</yellow></b>';
+          map += '{Y@{x';
         } else if (room.area.getRoomAtCoordinates(x, y, coords.z)) {
           const hasUp = room.area.getRoomAtCoordinates(x, y, coords.z + 1);
           const hasDown = room.area.getRoomAtCoordinates(x, y, coords.z - 1);

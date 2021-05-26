@@ -68,7 +68,7 @@ module.exports = {
     commandQueued: state => function (commandIndex) {
       const command = this.commandQueue.queue[commandIndex];
       const ttr = sprintf('%.1f', this.commandQueue.getTimeTilRun(commandIndex));
-      B.sayAt(this, `<bold><yellow>Executing</yellow> '<white>${command.label}</white>' <yellow>in</yellow> <white>${ttr}</white> <yellow>seconds.</yellow>`);
+      B.sayAt(this, `{YExecuting{x '{w${command.label}{x' {yin{x {w${ttr}{x {yseconds.{x`);
     },
 
     updateTick: state => function () {
@@ -96,13 +96,13 @@ module.exports = {
      * @param {number} amount Exp gained
      */
     experience: state => function (amount) {
-      B.sayAt(this, `<blue>You gained <bold>${amount}</bold> experience!</blue>`);
+      B.sayAt(this, `{bYou gained ${amount}{x experience!{x`);
 
       const totalTnl = LevelUtil.expToLevel(this.level + 1);
 
       // level up, currently wraps experience if they gain more than needed for multiple levels
       if (this.experience + amount > totalTnl) {
-        B.sayAt(this, '                                   <bold><blue>!Level Up!</blue></bold>');
+        B.sayAt(this, '                                   {B!Level Up!{x');
         B.sayAt(this, B.progress(80, 100, "blue"));
 
         let nextTnl = totalTnl;
@@ -111,7 +111,7 @@ module.exports = {
           this.level++;
           this.experience = 0;
           nextTnl = LevelUtil.expToLevel(this.level + 1);
-          B.sayAt(this, `<blue>You are now level <bold>${this.level}</bold>!</blue>`);
+          B.sayAt(this, `{bYou are now level ${this.level}{x!{x`);
           this.emit('level');
         }
       }

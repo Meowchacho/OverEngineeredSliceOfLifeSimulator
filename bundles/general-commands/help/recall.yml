@@ -1,7 +1,7 @@
 ---
 command: recall
 body: |
-  Return to the waypoint you have saved as your home with '<b>waypoint home</b>'
+  Return to the waypoint you have saved as your home with 'waypoint home{x'
 related:
   - waypoint
 keywords:
