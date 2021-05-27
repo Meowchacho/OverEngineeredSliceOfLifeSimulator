@@ -1,9 +1,9 @@
 'use strict';
 
 const { Random } = require('rando-js');
-const { Broadcast } = require('ranvier');
+const { BroadcastSystem} = require('ranvier');
 const { CommandParser } = require('../..//bundle-example-lib/lib/CommandParser');
-const say = Broadcast.sayAt;
+const say = BroadcastSystem.sayAt;
 
 module.exports = {
   usage: 'flee [direction]',

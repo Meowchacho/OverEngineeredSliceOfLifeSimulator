@@ -1,6 +1,6 @@
 'use strict';
 
-const { Config, Broadcast: B } = require('ranvier');
+const { Config, BroadcastSystem: B } = require('ranvier');
 const Combat = require('./lib/Combat');
 const CombatErrors = require('./lib/CombatErrors');
 const LevelUtil = require('../bundle-example-lib/lib/LevelUtil');
@@ -247,7 +247,7 @@ module.exports = {
           `{R${this.name} collapses to the ground, dead at the hands of ${killer.name}.{x` :
           `{R${this.name} collapses to the ground, dead{x`;
 
-        B.sayAtExcept(this.room, othersDeathMessage, (killer ? [killer, this] : this));
+        B.sayAtExcept(this.room,(killer ? [killer, this] : this), othersDeathMessage);
 
         if (this.party) {
           B.sayAt(this.party, `{G${this.name} was killed!{x`);
@@ -324,13 +324,13 @@ function promptBuilder(promptee) {
 
   // Build player health bar.
   let currentPerc = getHealthPercentage(promptee);
-  let progress = B.progress(progWidth, currentPerc, "green");
+  let progress = B.progress(progWidth, currentPerc, "{g");
   let buf = formatProgressBar(playerName, progress, promptee);
 
   // Build and add target health bars.
   for (const target of promptee.combatants) {
     let currentPerc = Math.floor((target.getAttribute('health') / target.getMaxAttribute('health')) * 100);
-    let progress = B.progress(progWidth, currentPerc, "red");
+    let progress = B.progress(progWidth, currentPerc, "{r");
     buf += `\r\n${formatProgressBar(target.name, progress, target)}`;
   }
 

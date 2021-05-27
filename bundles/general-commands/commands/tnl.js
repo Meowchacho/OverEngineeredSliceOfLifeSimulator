@@ -11,7 +11,7 @@ module.exports = {
     const currentPerc = player.experience ? Math.floor((player.experience / totalTnl) * 100) : 0;
 
     B.sayAt(player, `Level: ${player.level}`);
-    B.sayAt(player, B.progress(80, currentPerc, "blue"));
+    B.sayAt(player, B.progress(80, currentPerc, "{b"));
     B.sayAt(player, `${player.experience}/${totalTnl} (${currentPerc}%, ${totalTnl - player.experience} til next level)`);
   }
 };

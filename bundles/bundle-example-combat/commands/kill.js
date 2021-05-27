@@ -1,7 +1,7 @@
 'use strict';
 
 const Ranvier = require('ranvier');
-const B = Ranvier.Broadcast;
+const B = Ranvier.BroadcastSystem;
 const Logger = Ranvier.Logger;
 
 const Combat = require('../lib/Combat');
@@ -39,7 +39,7 @@ module.exports = {
     B.sayAt(player, `You attack ${target.name}.`);
 
     player.initiateCombat(target);
-    B.sayAtExcept(player.room, `${player.name} attacks ${target.name}!`, [player, target]);
+    B.sayAtExcept(player.room, [player, target], `${player.name} attacks ${target.name}!`);
     if (!target.isNpc) {
       B.sayAt(target, `${player.name} attacks you!`);
     }

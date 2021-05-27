@@ -1,7 +1,7 @@
 'use strict';
 
 const humanize = (sec) => { return require('humanize-duration')(sec, { round: true }); };
-const { Broadcast: B, EffectFlag } = require('ranvier');
+const { BroadcastSystem: B, EffectFlag } = require('ranvier');
 
 module.exports = {
   aliases: [ "affects" ],

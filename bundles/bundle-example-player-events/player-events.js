@@ -2,7 +2,7 @@
 
 const sprintf = require('sprintf-js').sprintf;
 const LevelUtil = require('../bundle-example-lib/lib/LevelUtil');
-const { Broadcast: B, Config, Logger } = require('ranvier');
+const { BroadcastSystem: B, Config, Logger } = require('ranvier');
 
 module.exports = {
   listeners: {
@@ -42,7 +42,7 @@ module.exports = {
       });
 
       B.sayAt(oldRoom, `${this.name} leaves.`);
-      B.sayAtExcept(nextRoom, `${this.name} enters.`, this);
+      B.sayAtExcept(nextRoom, this, `${this.name} enters.`);
 
       for (const follower of this.followers) {
         if (follower.room !== oldRoom) {
@@ -84,7 +84,7 @@ module.exports = {
       if (timeSinceLastCommand > maxIdleTime && !this.isInCombat()) {
         this.save(() => {
           B.sayAt(this, `You were kicked for being idle for more than ${maxIdleTime / 60000} minutes!`);
-          B.sayAtExcept(this.room, `${this.name} disappears.`, this);
+          B.sayAtExcept(this.room, this, `${this.name} disappears.`);
           Logger.log(`Kicked ${this.name} for being idle.`);
           state.PlayerManager.removePlayer(this, true);
         });
@@ -103,7 +103,7 @@ module.exports = {
       // level up, currently wraps experience if they gain more than needed for multiple levels
       if (this.experience + amount > totalTnl) {
         B.sayAt(this, '                                   {B!Level Up!{x');
-        B.sayAt(this, B.progress(80, 100, "blue"));
+        B.sayAt(this, B.progress(80, 100, "{b"));
 
         let nextTnl = totalTnl;
         while (this.experience + amount > nextTnl) {
@@ -111,7 +111,7 @@ module.exports = {
           this.level++;
           this.experience = 0;
           nextTnl = LevelUtil.expToLevel(this.level + 1);
-          B.sayAt(this, `{bYou are now level ${this.level}{x!{x`);
+          B.sayAt(this, `{bYou are now level ${this.level}!{x`);
           this.emit('level');
         }
       }

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Config, EventUtil, Logger } = require('ranvier');
+const { BroadcastSystem, Config, EventUtil, Logger } = require('ranvier');
 
 /**
  * Account character selection event
@@ -56,12 +56,12 @@ module.exports = {
             let existed = false;
             if (currentPlayer) {
               // kill old connection
-              Broadcast.at(currentPlayer, 'Connection taken over by another client. Goodbye.');
+              BroadcastSystem.at(currentPlayer, 'Connection taken over by another client. Goodbye.');
               currentPlayer.socket.end();
 
               // link new socket
               currentPlayer.socket = socket;
-              Broadcast.at(currentPlayer, 'Taking over old connection. Welcome.');
+              BroadcastSystem.at(currentPlayer, 'Taking over old connection. Welcome.');
               Broadcast.prompt(currentPlayer);
 
               currentPlayer.socket.emit('commands', currentPlayer);

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast: B } = require('ranvier');
+const { BroadcastSystem: B } = require('ranvier');
 const Crafting = require('../lib/Crafting');
 const ItemUtil = require('../../bundle-example-lib/lib/ItemUtil');
 

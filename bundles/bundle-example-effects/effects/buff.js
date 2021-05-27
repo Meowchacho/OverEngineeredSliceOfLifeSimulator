@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, EffectFlag } = require('ranvier');
+const { BroadcastSystem, EffectFlag } = require('ranvier');
 
 module.exports = {
   config: {
@@ -22,11 +22,11 @@ module.exports = {
   },
   listeners: {
     effectActivated: function () {
-      Broadcast.sayAt(this.target, "Strength courses through your veins!");
+      BroadcastSystem.sayAt(this.target, "Strength courses through your veins!");
     },
 
     effectDeactivated: function () {
-      Broadcast.sayAt(this.target, "You feel weaker.");
+      BroadcastSystem.sayAt(this.target, "You feel weaker.");
     }
   }
 };

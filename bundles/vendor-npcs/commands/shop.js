@@ -1,7 +1,7 @@
 'use strict';
 
 const sprintf = require('sprintf-js').sprintf;
-const { Broadcast: B, CommandManager, ItemType } = require('ranvier');
+const { BroadcastSystem: B, CommandManager, ItemType } = require('ranvier');
 const say = B.sayAt;
 const ItemUtil = require('../../bundle-example-lib/lib/ItemUtil');
 const Parser = require('../../bundle-example-lib/lib/ArgParser');

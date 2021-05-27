@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, EventUtil } = require('ranvier');
+const { BroadcastSystem, EventUtil } = require('ranvier');
 const PlayerClass = require('../../bundle-example-classes/lib/PlayerClass');
 
 /**

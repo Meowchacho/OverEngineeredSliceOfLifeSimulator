@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Damage, Heal, SkillType } = require('ranvier');
+const { BroadcastSystem, Damage, Heal, SkillType } = require('ranvier');
 const Combat = require('../../bundle-example-combat/lib/Combat');
 
 // config placed here just for easy copy/paste of this skill later on
@@ -29,9 +29,9 @@ module.exports = {
 
     const favorRestore = new Heal('favor', favorAmount, player, this);
 
-    Broadcast.sayAt(player, `{YConcentrated holy energy slams into ${target.name}!{x`);
-    Broadcast.sayAtExcept(player.room, `{Y${player.name} conjures concentrated holy energy and slams it into ${target.name}!{x`, [target, player]);
-    Broadcast.sayAt(target, `{Y${player.name} conjures concentrated holy energy and slams it into you!{x`);
+    BroadcastSystem.sayAt(player, `{YConcentrated holy energy slams into ${target.name}!{x`);
+    BroadcastSystem.sayAtExcept(player.room, [target, player], `{Y${player.name} conjures concentrated holy energy and slams it into ${target.name}!{x`);
+    BroadcastSystem.sayAt(target, `{Y${player.name} conjures concentrated holy energy and slams it into you!{x`);
 
     damage.commit(target);
     target.addEffect(effect);

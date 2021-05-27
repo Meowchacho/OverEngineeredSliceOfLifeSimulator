@@ -1,11 +1,11 @@
 'use strict';
 
-const { Broadcast, Logger } = require('ranvier');
+const { BroadcastSystem, Logger } = require('ranvier');
 
 module.exports = {
   listeners: {
     spawn: state => function () {
-      Broadcast.sayAt("npc", this.room, "A rat scurries into view.");
+      BroadcastSystem.sayAt("npc", this.room, "A rat scurries into view.");
       Logger.log(`Spawned rat into Room [${this.room.title}]`);
     },
 
@@ -23,13 +23,13 @@ module.exports = {
       // skills do both of these checks internally but I only want to send
       // this message when execute would definitely succeed
       if (!rend.onCooldown(this) && rend.hasEnoughResources(this)) {
-        Broadcast.sayAt(target, "The rat bears its fangs and leaps at your throat!");
+        BroadcastSystem.sayAt(target, "The rat bears its fangs and leaps at your throat!");
         rend.execute(null, this, target);
       }
     },
 
     deathblow: state => function (player) {
-      Broadcast.sayAt(player.room, `The rat seems to snicker evilly as ${player.name} drops dead from their wounds.`);
+      BroadcastSystem.sayAt(player.room, `The rat seems to snicker evilly as ${player.name} drops dead from their wounds.`);
     }
   }
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast } = require('ranvier');
+const { BroadcastSystem } = require('ranvier');
 
 module.exports = {
   listeners: {
@@ -9,7 +9,7 @@ module.exports = {
         return;
       }
 
-      Broadcast.sayAt(player, 'The puppy lets out a happy bark and runs to your side.');
+      BroadcastSystem.sayAt(player, 'The puppy lets out a happy bark and runs to your side.');
       this.follow(player);
     }
   }

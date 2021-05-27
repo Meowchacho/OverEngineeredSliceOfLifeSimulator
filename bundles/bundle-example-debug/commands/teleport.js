@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, PlayerRoles } = require('ranvier');
+const { BroadcastSystem, PlayerRoles } = require('ranvier');
 
 module.exports = {
   aliases: ['tp'],
@@ -8,7 +8,7 @@ module.exports = {
   requiredRole: PlayerRoles.ADMIN,
   command: (state) => (args, player) => {
     if (!args || !args.length) {
-      return Broadcast.sayAt(player, 'Must specify a destination using an online player or room entity reference.');
+      return BroadcastSystem.sayAt(player, 'Must specify a destination using an online player or room entity reference.');
     }
 
     const target = args;
@@ -18,16 +18,16 @@ module.exports = {
     if (isRoom) {
       targetRoom = state.RoomManager.getRoom(target);
       if (!targetRoom) {
-        return Broadcast.sayAt(player, 'No such room entity reference exists.');
+        return BroadcastSystem.sayAt(player, 'No such room entity reference exists.');
       } else if (targetRoom === player.room) {
-        return Broadcast.sayAt(player, 'You try really hard to teleport before realizing you\'re already at your destination.');
+        return BroadcastSystem.sayAt(player, 'You try really hard to teleport before realizing you\'re already at your destination.');
       }
     } else {
       const targetPlayer = state.PlayerManager.getPlayer(target);
       if (!targetPlayer) {
-        return Broadcast.sayAt(player, 'No such player online.');
+        return BroadcastSystem.sayAt(player, 'No such player online.');
       } else if (targetPlayer === player || targetPlayer.room === player.room) {
-        return Broadcast.sayAt(player, 'You try really hard to teleport before realizing you\'re already at your destination.');
+        return BroadcastSystem.sayAt(player, 'You try really hard to teleport before realizing you\'re already at your destination.');
       }
 
       targetRoom = targetPlayer.room;
@@ -36,7 +36,7 @@ module.exports = {
     player.followers.forEach(follower => {
       follower.unfollow();
       if (!follower.isNpc) {
-        Broadcast.sayAt(follower, `You stop following ${player.name}.`);
+        BroadcastSystem.sayAt(follower, `You stop following ${player.name}.`);
       }
     });
 
@@ -47,11 +47,11 @@ module.exports = {
     const oldRoom = player.room;
 
     player.moveTo(targetRoom, () => {
-      Broadcast.sayAt(player, '{GYou snap your finger and instantly appear in a new room.{x\r\n');
+      BroadcastSystem.sayAt(player, '{GYou snap your finger and instantly appear in a new room.{x\r\n');
       state.CommandManager.get('look').execute('', player);
     });
 
-    Broadcast.sayAt(oldRoom, `${player.name} teleported away.`);
-    Broadcast.sayAtExcept(targetRoom, `${player.name} teleported here.`, player);
+    BroadcastSystem.sayAt(oldRoom, `${player.name} teleported away.`);
+    BroadcastSystem.sayAtExcept(targetRoom, player, `${player.name} teleported here.`);
   }
 };

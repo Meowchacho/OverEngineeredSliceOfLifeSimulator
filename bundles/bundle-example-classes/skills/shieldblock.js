@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, SkillType } = require('ranvier');
+const { BroadcastSystem, SkillType } = require('ranvier');
 
 // config placed here just for easy configuration of this skill later on
 const cooldown = 45;
@@ -23,7 +23,7 @@ module.exports = {
 
   run: state => function (args, player, target) {
     if (!player.equipment.has('shield')) {
-      Broadcast.sayAt(player, "You aren't wearing a shield!");
+      BroadcastSystem.sayAt(player, "You aren't wearing a shield!");
       return false;
     }
 
@@ -39,8 +39,8 @@ module.exports = {
     );
     effect.skill = this;
 
-    Broadcast.sayAt(player, `You raise your shield, bracing for incoming attacks!{x`);
-    Broadcast.sayAtExcept(player.room, `${player.name} raises their shield, bracing for incoming damage.{x`, [player]);
+    BroadcastSystem.sayAt(player, `You raise your shield, bracing for incoming attacks!{x`);
+    BroadcastSystem.sayAtExcept(player.room, [player],`${player.name} raises their shield, bracing for incoming damage.{x`);
     player.addEffect(effect);
   },
 

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Damage, SkillType } = require('ranvier');
+const { BroadcastSystem, Damage, SkillType } = require('ranvier');
 
 const damagePercent = 100;
 const manaCost = 80;
@@ -28,10 +28,10 @@ module.exports = {
       type: 'physical',
     });
 
-    Broadcast.sayAt(player, 'With a wave of your hand, you unleash a {rfire{x{yball{x at your target!{x');
-    Broadcast.sayAtExcept(player.room, `With a wave of their hand, ${player.name} unleashes a {rfire{x{yball{x at ${target.name}!{x`, [player, target]);
+    BroadcastSystem.sayAt(player, 'With a wave of your hand, you unleash a {rfire{x{yball{x at your target!{x');
+    BroadcastSystem.sayAtExcept(player.room, [player, target],`With a wave of their hand, ${player.name} unleashes a {rfire{x{yball{x at ${target.name}!{x`);
     if (!target.isNpc) {
-      Broadcast.sayAt(target, `With a wave of their hand, ${player.name} unleashes a {rfire{x{yball{x at you!{x`);
+      BroadcastSystem.sayAt(target, `With a wave of their hand, ${player.name} unleashes a {rfire{x{yball{x at you!{x`);
     }
     damage.commit(target);
   },

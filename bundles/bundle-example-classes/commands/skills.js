@@ -1,7 +1,7 @@
 'use strict';
 
 const sprintf = require('sprintf-js').sprintf;
-const { Broadcast: B, Logger } = require('ranvier');
+const { BroadcastSystem: B, Logger } = require('ranvier');
 
 module.exports = {
   aliases: ['abilities', 'spells'],

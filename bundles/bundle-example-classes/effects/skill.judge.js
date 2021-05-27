@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, EffectFlag, Heal } = require('ranvier');
+const { BroadcastSystem, EffectFlag, Heal } = require('ranvier');
 
 /**
  * Effect applied by Judge skill. Reduces damage done.
@@ -28,11 +28,11 @@ module.exports = {
   },
   listeners: {
     effectActivated: function () {
-      Broadcast.sayAt(this.target, '{yThe holy judgement weakens you.{x');
+      BroadcastSystem.sayAt(this.target, '{yThe holy judgement weakens you.{x');
     },
 
     effectDeactivated: function () {
-      Broadcast.sayAt(this.target, '{yYou feel your strength return.{x');
+      BroadcastSystem.sayAt(this.target, '{yYou feel your strength return.{x');
     },
 
     hit: function () {

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast: B, CommandManager } = require('ranvier');
+const { BroadcastSystem: B, CommandManager } = require('ranvier');
 const say = B.sayAt;
 const ArgParser = require('../../bundle-example-lib/lib/ArgParser');
 
@@ -94,7 +94,7 @@ subcommands.add({
       const progress = quest.getProgress();
 
       B.at(player, '{Y' + (parseInt(i, 10) + 1) + '{x: ');
-      say(player, B.progress(60, progress.percent, 'yellow') + ` ${progress.percent}%`);
+      say(player, B.progress(60, progress.percent, '{y') + ` ${progress.percent}%`);
       say(player, B.indent('{Y' + quest.getProgress().display + '{x', 2));
 
       if (quest.config.npc) {

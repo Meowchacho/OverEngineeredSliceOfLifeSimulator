@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast: B, PlayerRoles } = require('ranvier');
+const { BroadcastSystem: B, PlayerRoles } = require('ranvier');
 
 /**
  * Command to allow you to reload a command's definition from disk without restarting the server

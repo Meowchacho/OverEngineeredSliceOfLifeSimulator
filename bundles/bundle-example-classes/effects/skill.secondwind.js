@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, EffectFlag, Heal } = require('ranvier');
+const { BroadcastSystem, EffectFlag, Heal } = require('ranvier');
 
 /**
  * Implementation effect for second wind skill
@@ -25,7 +25,7 @@ module.exports = {
         return;
       }
 
-      Broadcast.sayAt(this.target, "{YYou catch a second wind!{x");
+      BroadcastSystem.sayAt(this.target, "{YYou catch a second wind!{x");
       const amount = Math.floor(this.target.getMaxAttribute('energy') * (this.state.restorePercent / 100));
       const heal = new Heal('energy', amount, this.target, this.skill);
       heal.commit(this.target);

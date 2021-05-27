@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Damage } = require('ranvier');
+const { BroadcastSystem, Damage } = require('ranvier');
 const Combat = require('../../bundle-example-combat/lib/Combat');
 
 const cooldown = 10;
@@ -19,7 +19,7 @@ module.exports = {
 
   run: state => function (args, player, target) {
     if (!player.equipment.has('wield')) {
-      return Broadcast.sayAt(player, "You don't have a weapon equipped.");
+      return BroadcastSystem.sayAt(player, "You don't have a weapon equipped.");
     }
 
     const amount = Combat.calculateWeaponDamage(player) * (damagePercent / 100);
@@ -28,9 +28,9 @@ module.exports = {
       type: 'holy',
     });
 
-    Broadcast.sayAt(player, `{YYour weapon radiates holy energy and you strike ${target.name}!{x`);
-    Broadcast.sayAtExcept(player.room, `{Y${player.name}'s weapon radiates holy energy and they strike ${target.name}!{x`, [target, player]);
-    Broadcast.sayAt(target, `{Y${player.name}'s weapon radiates holy energy and they strike you!{x`);
+    BroadcastSystem.sayAt(player, `{YYour weapon radiates holy energy and you strike ${target.name}!{x`);
+    BroadcastSystem.sayAtExcept(player.room, [target, player], `{Y${player.name}'s weapon radiates holy energy and they strike ${target.name}!{x`);
+    BroadcastSystem.sayAt(target, `{Y${player.name}'s weapon radiates holy energy and they strike you!{x`);
 
     damage.commit(target);
   },

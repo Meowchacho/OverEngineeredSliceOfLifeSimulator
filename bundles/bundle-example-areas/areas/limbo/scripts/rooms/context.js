@@ -1,11 +1,11 @@
 'use strict';
 
-const { Broadcast } = require('ranvier');
+const { BroadcastSystem} = require('ranvier');
 
 module.exports = {
   listeners: {
     command: state => function (player, commandName, args) {
-      Broadcast.sayAt(player, `You just executed room context command '${commandName}' with arguments ${args}`);
+      BroadcastSystem.sayAt(player, `You just executed room context command '${commandName}' with arguments ${args}`);
     }
   }
 };

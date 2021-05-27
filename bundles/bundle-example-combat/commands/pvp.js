@@ -1,7 +1,7 @@
 'use strict';
 
 const Ranvier = require('ranvier');
-const { Broadcast } = Ranvier;
+const { BroadcastSystem} = Ranvier;
 
 module.exports = {
   command : (state) => (args, player) => {
@@ -12,6 +12,6 @@ module.exports = {
     const message = newPvpSetting ?
       'You are now able to enter into player-on-player duels.' :
       'You are now a pacifist and cannot enter player-on-player duels.';
-    Broadcast.sayAt(player, message);
+    BroadcastSystem.sayAt(player, message);
   }
 };

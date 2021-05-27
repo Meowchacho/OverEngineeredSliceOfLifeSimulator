@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Heal } = require('ranvier');
+const { BroadcastSystem, Heal } = require('ranvier');
 
 const healPercent = 20;
 const favorCost = 5;
@@ -31,12 +31,12 @@ module.exports = {
     const heal = new Heal('health', amount, player, this);
 
     if (target !== player) {
-      Broadcast.sayAt(player, `You call upon to the light to heal ${target.name}'s wounds.{x`);
-      Broadcast.sayAtExcept(player.room, `${player.name} calls upon to the light to heal ${target.name}'s wounds.{x`, [target, player]);
-      Broadcast.sayAt(target, `${player.name} calls upon to the light to heal your wounds.{x`);
+      BroadcastSystem.sayAt(player, `You call upon to the light to heal ${target.name}'s wounds.{x`);
+      BroadcastSystem.sayAtExcept(player.room, [target, player], `${player.name} calls upon to the light to heal ${target.name}'s wounds.{x`);
+      BroadcastSystem.sayAt(target, `${player.name} calls upon to the light to heal your wounds.{x`);
     } else {
-      Broadcast.sayAt(player, "You call upon to the light to heal your wounds.{x");
-      Broadcast.sayAtExcept(player.room, `${player.name} calls upon to the light to heal their wounds.{x`, [player, target]);
+      BroadcastSystem.sayAt(player, "You call upon to the light to heal your wounds.{x");
+      BroadcastSystem.sayAtExcept(player.room, [player, target], `${player.name} calls upon to the light to heal their wounds.{x`);
     }
 
     heal.commit(target);

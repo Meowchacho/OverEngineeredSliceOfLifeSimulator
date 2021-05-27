@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Damage, EffectFlag } = require('ranvier');
+const { BroadcastSystem, Damage, EffectFlag } = require('ranvier');
 
 /**
  * Implementation effect for a Rend damage over time skill
@@ -19,11 +19,11 @@ module.exports = {
     },
 
     effectActivated: function () {
-      Broadcast.sayAt(this.target, "{RYou've suffered a deep wound, it's bleeding profusely{x");
+      BroadcastSystem.sayAt(this.target, "{RYou've suffered a deep wound, it's bleeding profusely{x");
     },
 
     effectDeactivated: function () {
-      Broadcast.sayAt(this.target, "Your wound has stopped bleeding.");
+      BroadcastSystem.sayAt(this.target, "Your wound has stopped bleeding.");
     },
 
     updateTick: function () {

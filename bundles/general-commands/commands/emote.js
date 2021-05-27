@@ -29,7 +29,7 @@ module.exports = {
       }
     }
 
-    // Replace the initial emote message with the found targets and broadcast to the room.
+    // Replace the initial emote message with the found targets and BroadcastSystemto the room.
     const emoteMessage = matchedTargets
       .reduce((string, target) => string.replace(REPLACE_TARGETS_REGEXP, target.name), `${player.name} ${args}`)
       .replace(/([^.?!])$/, '$1.');  // Enforce punctuation

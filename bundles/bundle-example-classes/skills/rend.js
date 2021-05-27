@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, SkillType } = require('ranvier');
+const { BroadcastSystem, SkillType } = require('ranvier');
 const Combat = require('../../bundle-example-combat/lib/Combat');
 
 // config placed here just for easy copy/paste of this skill later on
@@ -45,12 +45,12 @@ module.exports = {
     effect.attacker = player;
 
     effect.on('effectDeactivated', _ => {
-      Broadcast.sayAt(player, `{r${target.name}{x stops bleeding.{x`);
+      BroadcastSystem.sayAt(player, `{r${target.name}{x stops bleeding.{x`);
     });
 
-    Broadcast.sayAt(player, `{rWith a vicious attack you open a deep wound in ${target.name}{x!{x`);
-    Broadcast.sayAtExcept(player.room, [target, player],`{r${player.name} viciously rends ${target.name}.{x`);
-    Broadcast.sayAt(target, `{r${player.name} viciously rends you!{x`);
+    BroadcastSystem.sayAt(player, `{rWith a vicious attack you open a deep wound in ${target.name}{x!{x`);
+    BroadcastSystem.sayAtExcept(player.room, [target, player],`{r${player.name} viciously rends ${target.name}.{x`);
+    BroadcastSystem.sayAt(target, `{r${player.name} viciously rends you!{x`);
     target.addEffect(effect);
   },
 

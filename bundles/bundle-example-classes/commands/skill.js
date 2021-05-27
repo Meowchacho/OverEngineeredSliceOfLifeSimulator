@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast: B, SkillFlag } = require('ranvier');
+const { BroadcastSystem: B, SkillFlag } = require('ranvier');
 
 module.exports = {
   aliases: [ "spell" ],

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Logger } = require('ranvier');
+const { BroadcastSystem, Logger } = require('ranvier');
 const PlayerClass = require('../../bundle-example-classes/lib/PlayerClass');
 
 
@@ -23,7 +23,7 @@ module.exports = {
 
     state.CommandManager.get('look').execute(null, player);
 
-    Broadcast.prompt(player);
+    BroadcastSystem.prompt(player);
 
     // All that shit done, let them play!
     player.socket.emit('commands', player);

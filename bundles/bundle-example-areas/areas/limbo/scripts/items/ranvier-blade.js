@@ -2,7 +2,7 @@
 
 const { Random } = require('rando-js');
 
-const { Broadcast, Heal } = require('ranvier');
+const { BroadcastSystem, Heal } = require('ranvier');
 
 /**
  * Example weapon hit script
@@ -26,7 +26,7 @@ module.exports = {
 
         const heal = new Heal('health', amount, damage.attacker, this);
 
-        Broadcast.sayAt(damage.attacker, `{WThe Blade of Ranvier shines with a bright white light and you see wisps of ${target.name}'s soul flow into the blade.{x`, 80);
+        BroadcastSystem.sayAt(damage.attacker, `{WThe Blade of Ranvier shines with a bright white light and you see wisps of ${target.name}'s soul flow into the blade.{x`, 80);
         heal.commit(damage.attacker);
       }
     }

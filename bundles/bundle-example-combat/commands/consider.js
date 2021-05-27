@@ -2,7 +2,7 @@
 
 const Combat = require('../lib/Combat');
 const CombatErrors = require('../lib/CombatErrors');
-const { Broadcast: B, Logger } = require('ranvier');
+const { BroadcastSystem: B, Logger } = require('ranvier');
 
 module.exports = {
   usage: 'consider <target>',

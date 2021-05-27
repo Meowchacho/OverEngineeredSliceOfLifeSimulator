@@ -1,6 +1,6 @@
 'use strict';
 
-const { Broadcast, Damage, SkillType } = require('ranvier');
+const { BroadcastSystem, Damage, SkillType } = require('ranvier');
 const Combat = require('../../bundle-example-combat/lib/Combat');
 
 const damagePercent = 250;
@@ -29,10 +29,10 @@ module.exports = {
       type: 'physical',
     });
 
-    Broadcast.sayAt(player, '{rYou shift your feet and let loose a mighty attack!{x');
-    Broadcast.sayAtExcept(player.room, `{r${player.name} lets loose a lunging attack on ${target.name}!{x`, [player, target]);
+    BroadcastSystem.sayAt(player, '{rYou shift your feet and let loose a mighty attack!{x');
+    BroadcastSystem.sayAtExcept(player.room, [target, player], `{r${player.name} lets loose a lunging attack on ${target.name}!{x`);
     if (!target.isNpc) {
-      Broadcast.sayAt(target, `{r${player.name} lunges at you with a fierce attack!{x`);
+      BroadcastSystem.sayAt(target, `{r${player.name} lunges at you with a fierce attack!{x`);
     }
     damage.commit(target);
   },
