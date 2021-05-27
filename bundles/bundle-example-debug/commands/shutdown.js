@@ -7,10 +7,14 @@ const { BroadcastSystem, PlayerRoles } = require('ranvier');
  */
 module.exports = {
   requiredRole: PlayerRoles.ADMIN,
-  command: state => async (time, player) => {
+  command: state => (time, player) => {
+
+    if (time === 'reboot') {
+      BroadcastSystem.sayAt(state.PlayerManager, '{RGame is totally rebooting{x');
+      return;
+    }
     if (time === 'now') {
       BroadcastSystem.sayAt(state.PlayerManager, '{YGame is shutting down now!{x');
-      await state.PlayerManager.saveAll();
       process.exit();
       return;
     }
@@ -23,7 +27,7 @@ module.exports = {
     setTimeout(async _ => {
       BroadcastSystem.sayAt(state.PlayerManager, '{YGame is shutting down now!{x');
       state.PlayerManager.saveAll();
-      await process.exit();
+      process.exit();
     }, 30000);
   }
 };

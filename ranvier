@@ -17,9 +17,11 @@ const net = require('net');
 const commander = require('commander');
 const argv = require('optimist').argv;
 const fs = require('fs');
-
 // for dev clone the github:ranviermud/core repo, and run npm link in that folder, then come
 // back to the ranviermud repo and run npm link ranvier
+//function nocache(module) {require("fs").watchFile(require("path").resolve(module), () => {delete require.cache[require.resolve(module)]})}
+//nocache('ranvier');
+
 const Ranvier = require('ranvier');
 const Config = Ranvier.Config;
 
