@@ -22,7 +22,7 @@ module.exports = {
 
     // Boot and log any failed password attempts
     if (passwordAttempts[name] > maxFailedAttempts) {
-      write("Password attempts exceeded.\r\n");
+      write("Password attempts exceeded. \r\n");
       passwordAttempts[name] = 0;
       socket.end();
       return false;
@@ -37,7 +37,7 @@ module.exports = {
       socket.command('toggleEcho');
 
       if (!args.account.checkPassword(pass.toString().trim())) {
-        write("{rIncorrect password.{x\r\n");
+        write("{rIncorrect password. {x\r\n");
         passwordAttempts[name]++;
 
         return socket.emit('password', socket, args);

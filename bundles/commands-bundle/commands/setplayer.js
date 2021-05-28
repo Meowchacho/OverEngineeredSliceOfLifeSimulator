@@ -2,13 +2,14 @@
 
 const { BroadcastSystem: B, PlayerDescription } = require('ranvier');
 
+const Helper = require('../../lib/CommonFunctions');
 /**
  * Set the color of various messages
  */
 module.exports = {
     usage: 'setplayer',
     command: (state) => (args, player) => {
-        let [target, thingToSet, value] = args.split(' ');
+        let [target, thingToSet, value] = Helper.tokenizer(args,2)
 
         if (!target) {
             B.sayAt(player, `Set things on -who-?`);

@@ -12,6 +12,7 @@ const {
 } = require('ranvier');
 const ArgParser = require('../../lib/ArgParser');
 const ItemUtil = require('../../lib/ItemUtil');
+const Helper = require('../../lib/CommonFunctions')
 
 module.exports = {
   usage: "look [thing]",
@@ -80,7 +81,7 @@ function lookRoom(state, player) {
     B.sayAt(player, '{Y' + sprintf('%-65s', room.title));
     B.sayAt(player, B.line(60));
   } else {
-    const [ line1, line2, line3 ] = getCompass(player);
+    const [line1, line2, line3] = getCompass(player);
 
     // map is 15 characters wide, room is formatted to 80 character width
     B.sayAt(player, '{Y' + sprintf('%-65s', room.title) + line1);
@@ -127,12 +128,12 @@ function lookRoom(state, player) {
     if (npc.quests) {
       hasNewQuest = npc.quests.find(questRef => state.QuestFactory.canStart(player, questRef));
       hasReadyQuest = npc.quests.find(questRef => {
-          return player.questTracker.isActive(questRef) &&
-            player.questTracker.get(questRef).getProgress().percent >= 100;
+        return player.questTracker.isActive(questRef) &&
+          player.questTracker.get(questRef).getProgress().percent >= 100;
       });
       hasActiveQuest = npc.quests.find(questRef => {
-          return player.questTracker.isActive(questRef) &&
-            player.questTracker.get(questRef).getProgress().percent < 100;
+        return player.questTracker.isActive(questRef) &&
+          player.questTracker.get(questRef).getProgress().percent < 100;
       });
 
       let questString = '';
@@ -152,7 +153,7 @@ function lookRoom(state, player) {
     // color NPC label by difficulty
     let npcLabel = 'NPC';
     switch (true) {
-      case (player.level  - npc.level > 4):
+      case (player.level - npc.level > 4):
         npcLabel = '{cNPC{x';
         break;
       case (npc.level - player.level > 9):
@@ -208,12 +209,13 @@ function lookEntity(state, player, args) {
   let search = null;
 
   if (args.length > 1) {
-    search = args[0] === 'in' ? args[1] : args[0];
+    search = (args[0] === 'in' || args[0] === 'at') ? args[1] : args[0];
   } else {
     search = args[0];
   }
 
-  let entity = ArgParser.parseDot(search, room.items);
+  let entity = (search === 'me' || search === 'self' || search === 'myself') ? player : null;
+  entity = entity || ArgParser.parseDot(search, room.items);
   entity = entity || ArgParser.parseDot(search, room.players);
   entity = entity || ArgParser.parseDot(search, room.npcs);
   entity = entity || ArgParser.parseDot(search, player.inventory);
@@ -222,19 +224,36 @@ function lookEntity(state, player, args) {
     return B.sayAt(player, "You don't see anything like that here.");
   }
 
-  if (entity instanceof Player) {
-    // TODO: Show player equipment?
-    B.sayAt(player, `You see fellow player ${entity.name}.`);
-    return;
+
+  B.sayAtExcept(player.room, [player, entity], `${player.name} looks at ${entity.name}.`);
+  if (entity.name != player.name) {
+    B.sayAt(player, `You look at ${entity.name}.`)
+    B.sayAt(entity, `${player.name} looks at you.`);
+  }
+  else {
+    B.sayAt(player, `You look at yourself.`);
   }
 
-  B.sayAt(player, entity.description, 80);
+  if (entity instanceof Player) {
+    let gender = entity.description.gender;
+    let subject = Helper.capitalize(Helper.pronounify(gender, 'third', 'possessive'))
+    B.sayAt(player, `You see ${entity.name}, a type of ${gender}.`);
+    B.sayAt(player, `${entity.description.longDescription}`);
+    B.sayAt(player, `${subject} hair is ${entity.description.describeHair()}.`);
+    B.sayAt(player, `${subject} eyes are ${entity.description.describeEyes()}.`);
+    B.sayAt(player, `${subject} skin is ${entity.description.describeSkin()}.`);
+    B.sayAt(player, `${subject} body is ${entity.description.describeBody()}.`);
+  }
+  else {
+    B.sayAt(player, entity.description, '', '', 80);
+  }
 
   if (entity.timeUntilDecay) {
     B.sayAt(player, `You estimate that ${entity.name} will rot away in ${humanize(entity.timeUntilDecay)}.`);
   }
 
-  const usable = entity.getBehavior('usable');
+  const usable = typeof entity.getBehavior === "function" ? entity.getBehavior('usable') : null;
+
   if (usable) {
     if (usable.spell) {
       const useSpell = state.SpellManager.get(usable.spell);
@@ -259,24 +278,24 @@ function lookEntity(state, player, args) {
       case ItemType.ARMOR:
         return B.sayAt(player, ItemUtil.renderItem(state, entity, player));
       case ItemType.CONTAINER: {
-        if (!entity.inventory || !entity.inventory.size) {
-          return B.sayAt(player, `${entity.name} is empty.`);
-        }
-
         if (entity.closed) {
-          return B.sayAt(player, `It is closed.`);
+          B.sayAt(player, `It is closed.`);
         }
+        else if (!entity.inventory || !entity.inventory.size) {
+          B.sayAt(player, `${entity.name} is empty.`);
+        }
+        else {
+          B.at(player, 'Contents');
+          if (isFinite(entity.inventory.getMax())) {
+            B.at(player, ` (${entity.inventory.size}/${entity.inventory.getMax()})`);
+          }
+          B.sayAt(player, ':');
 
-        B.at(player, 'Contents');
-        if (isFinite(entity.inventory.getMax())) {
-          B.at(player, ` (${entity.inventory.size}/${entity.inventory.getMax()})`);
+          for (const [, item] of entity.inventory) {
+            B.sayAt(player, '  ' + ItemUtil.display(item));
+          }
+          break;
         }
-        B.sayAt(player, ':');
-
-        for (const [, item ] of entity.inventory) {
-          B.sayAt(player, '  ' + ItemUtil.display(item));
-        }
-        break;
       }
     }
   }

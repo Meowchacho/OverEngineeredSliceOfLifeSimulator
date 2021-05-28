@@ -6,7 +6,7 @@ const CommonFunctions = require('../../lib/CommonFunctions');
 module.exports = {
   event: state => (socket, args) => {
     if (!args || !args.dontwelcome) {
-      socket.write('What is your OOC account name?');
+      socket.write('What is your OOC account name? \x20');
     }
 
     socket.once('data', async name => {
@@ -28,18 +28,18 @@ module.exports = {
       }
 
       if (!account) {
-        Logger.error(`No account found as ${name}.`);
+        Logger.error(`No account found as ${name}. `);
         return socket.emit('create-account', socket, name);
       }
 
       if (account.banned) {
-        socket.write('This account has been banned.\r\n');
+        socket.write('This account has been banned. \r\n');
         socket.end();
         return;
       }
 
       if (account.deleted) {
-        socket.write('This account has been deleted.\r\n');
+        socket.write('This account has been deleted. \r\n');
         socket.end();
         return;
       }
