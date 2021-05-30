@@ -8,13 +8,20 @@ const { BroadcastSystem: B } = require('ranvier');
  * with all input as `args` and the current state as the 4th argument after arg0. */
 module.exports = {
   usage: 'modaltest',
-  command: state => (args, player, arg0, commandState) => {
-    args = args.trim();
+  command: state => (args, player, arg0, extraArgs) => {
+    let commandState = null;
+    let accumulator = [];
+    if (extraArgs) {
+      commandState = extraArgs.state || null;
+      accumulator = extraArgs.accumulator || [];
+      //args = args.trim();
+    }
 
     if (!commandState) {
       B.sayAt(player, 'This is a test of a modal command');
       B.at(player, 'Please choose (a) or (b): ');
-      return 'choose';
+      if (args.length > 0) { accumulator.push(args);}
+      return { 'state': 'choose', 'accumulator': accumulator };
     }
 
     switch (commandState) {
@@ -22,7 +29,8 @@ module.exports = {
         if (!(['a', 'b'].includes(args.toLowerCase()))) {
           B.sayAt(player, 'Not a valid choice.');
           B.at(player, 'Please choose (a) or (b): ');
-          return 'choose';
+          if (args.length > 0) { accumulator.push(args);}
+          return { 'state': 'choose', 'accumulator': accumulator};
         }
 
         B.sayAt(player, `You chose [${args}]. Hooray!`);

@@ -5,6 +5,7 @@
  */
 
 const { Config } = require('ranvier');
+const wrap = require('wrap-ansi');
 
 /**
  * @param {string} name
@@ -59,7 +60,25 @@ exports.tokenizer = function(msg, nTokens) {
       // exec() returned null, could not match enough tokens
       throw new Error('EOL when reading tokens');
   }
-
+  
   tokens.push(msg.slice(token.lastIndex));
   return tokens;
+}
+
+exports.formatBigText = function(message, width = 80) {
+  let lStr = this.stripNewlines(message);
+  lStr = wrap(lStr, width,{'trim':false});
+  lStr = lStr.replace(/\n\s+/g, '\n');
+  return lStr;
+}
+
+exports.stripNewlines = function (message) {
+  return message.replace(/\r\n/g, ' ').replace(/\n/g, ' ');
+}
+exports.fixNewlines = function(message) {
+  // Fix \n not in a \r\n pair to prevent bad rendering on windows
+  message = message.replace(/\r\n/g, '<NEWLINE>').split('\n');
+  message = message.join('\r\n').replace(/<NEWLINE>/g, '\r\n');
+  // fix sty's incredibly stupid default of always appending ^[[0m
+  return message.replace(/\x1B\[0m$/, '');
 }

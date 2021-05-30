@@ -16,7 +16,8 @@ module.exports = {
       }
       data = data.toString().trim();
 
-      if (!data.length) {
+      if (!data.length && !player._commandState) {
+        B.prompt(player);
         return loop();
       }
 

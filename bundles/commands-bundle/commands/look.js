@@ -238,7 +238,7 @@ function lookEntity(state, player, args) {
     let gender = entity.description.gender;
     let subject = Helper.capitalize(Helper.pronounify(gender, 'third', 'possessive'))
     B.sayAt(player, `You see ${entity.name}, a type of ${gender}.`);
-    B.sayAt(player, `${entity.description.longDescription}`);
+    B.sayAt(player, `${entity.description.longDescription.join('\n')}`);
     B.sayAt(player, `${subject} hair is ${entity.description.describeHair()}.`);
     B.sayAt(player, `${subject} eyes are ${entity.description.describeEyes()}.`);
     B.sayAt(player, `${subject} skin is ${entity.description.describeSkin()}.`);

@@ -6,7 +6,7 @@ const CommonFunctions = require('../../lib/CommonFunctions');
 module.exports = {
   event: state => (socket, args) => {
     if (!args || !args.dontwelcome) {
-      socket.write('What is your OOC account name? \x20');
+      socket.write('What is your OOC account name? ');
     }
 
     socket.once('data', async name => {
