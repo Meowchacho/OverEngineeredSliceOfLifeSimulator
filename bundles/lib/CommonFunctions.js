@@ -145,6 +145,7 @@ exports.printBufferHelp = function (type, player) {
   B.sayAt(player, 'If you are confused, type .q to abort without changing anything.', '', '', 90);
 }
 exports.stringTrimmer = function (string, length) {
+  if (!string) {string = 'No Subject'}; 
   var trimmedString = string.length > length ? string.substring(0, length - 3) + "..." : string;
   return trimmedString;
 }
@@ -238,7 +239,7 @@ exports.editorLambda = function (args, player, arg0, extraArgs) {
 
         accumulator = newBuffer;
         B.sayAt(player, 'Formatted the current buffer.');
-        accumulator.forEach((element, index) => { B.sayAt(player, `{w[{W${index.toString().padStart(3)}{w]{x ${element}`) });
+        accumulator.forEach((element, index) => { B.sayAt(player, `{w[{W${(index+1).toString().padStart(3)}{w]{x ${element}`) });
 
         B.at(player, '{W>{x ');
         return { 'state': 'writing', 'accumulator': accumulator, 'subCmd': subCommand, 'typeOfBuffer': typeOfBuffer };

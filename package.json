@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "node --inspect ./ranvier -v",
+    "start": "node --inspect ./ranvier -v -p 8083",
     "init": "node ./util/init-bundles.js",
     "update-bundle-remote": "node ./util/update-bundle-url.js",
     "remove-bundle": "node ./util/remove-bundle.js",
