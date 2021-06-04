@@ -47,7 +47,21 @@ exports.capitalize = (s) => {
   if (typeof s !== 'string') return ''
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
 
+exports.getCurrentDateString = function () {
+  let date_ob = new Date();
+
+  let date = ("0" + date_ob.getDate()).slice(-2);
+  let month = (monthNames[date_ob.getMonth()]);
+  let year = date_ob.getFullYear();
+  let hours = ("0" + date_ob.getHours()).slice(-2);
+  let minutes = ("0" + date_ob.getMinutes()).slice(-2);
+
+  return `${date} ${month} ${hours}:${minutes}`
+}
 exports.tokenizer = function (msg, nTokens) {
   var token = /(\S+)\s*/g, tokens = [], match;
 
@@ -118,7 +132,7 @@ exports.printNoteList = function (board, player) {
 
   notes.forEach(note => {
     B.sayAt(player, `| ${this.stringTrimmer
-      (note.number.toString(), 6).padEnd(6)} | 13 Jul 11:24 | ${this.stringTrimmer(note.from, 13).padEnd(13)} | ${this.stringTrimmer(note.subject, 36).padEnd(36)} |`);
+      (note.number.toString(), 6).padEnd(6)} | ${note.dateWritten} | ${this.stringTrimmer(note.from, 13).padEnd(13)} | ${this.stringTrimmer(note.subject, 36).padEnd(36)} |`);
   });
   B.sayAt(player, '+' + this.line(78, '-') + '+');
 }
@@ -145,7 +159,7 @@ exports.printBufferHelp = function (type, player) {
   B.sayAt(player, 'If you are confused, type .q to abort without changing anything.', '', '', 90);
 }
 exports.stringTrimmer = function (string, length) {
-  if (!string) {string = 'No Subject'}; 
+  if (!string) { string = 'No Subject' };
   var trimmedString = string.length > length ? string.substring(0, length - 3) + "..." : string;
   return trimmedString;
 }
@@ -239,7 +253,7 @@ exports.editorLambda = function (args, player, arg0, extraArgs) {
 
         accumulator = newBuffer;
         B.sayAt(player, 'Formatted the current buffer.');
-        accumulator.forEach((element, index) => { B.sayAt(player, `{w[{W${(index+1).toString().padStart(3)}{w]{x ${element}`) });
+        accumulator.forEach((element, index) => { B.sayAt(player, `{w[{W${(index + 1).toString().padStart(3)}{w]{x ${element}`) });
 
         B.at(player, '{W>{x ');
         return { 'state': 'writing', 'accumulator': accumulator, 'subCmd': subCommand, 'typeOfBuffer': typeOfBuffer };
