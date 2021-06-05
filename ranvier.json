@@ -14,8 +14,7 @@
     "help-bundle",
     "simple-crafting",
     "ranvier-mongodb-datasource",
-    "oesol-telnet-networking",
-    "websocket-networking"
+    "telnet-bundle"
   ],
   "dataSources": {
     "YamlArea": {
