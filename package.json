@@ -21,7 +21,6 @@
     "dotenv": "^10.0.0",
     "humanize-duration": "^3.14.0",
     "oesol-telnet": "Meowchacho/oesol-telnet.git#master",
-    "optimist": "",
     "query-string": "^7.0.0",
     "rando-js": "^0.2.0",
     "ranvier": "Meowchacho/core.git",
