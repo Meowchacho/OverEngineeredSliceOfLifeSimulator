@@ -1,0 +1,16 @@
+{
+  "command": "put",
+  "body": "Put an item in a container\n",
+  "related": [
+    "drop",
+    "get",
+    "give",
+    "inventory",
+    "wear",
+    "wield"
+  ],
+  "keywords": [
+    "items",
+    "inventory"
+  ]
+}

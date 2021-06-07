@@ -56,11 +56,11 @@ subcommands.add({
     }
 
     B.sayAt(player, Helper.line(80, '='));
-    B.sayAt(player, `From: ${note.from}`);
+    B.sayAt(player, `From: ${note.from.padEnd(42, ' ')}Date: ${Helper.getLongDateString(note.dateWritten).padStart(26, ' ')}`);
     B.sayAt(player, `Subject: ${note.subject}`);
     B.sayAt(player, `To: ${note.to}`);
     B.sayAt(player, Helper.line(80, '='));
-    note.body.forEach((element)=>{B.sayAt(player, element);});
+    note.body.forEach((element) => { B.sayAt(player, element); });
   }
 });
 
@@ -79,14 +79,12 @@ subcommands.add({
       B.sayAt(player, 'No idea with that number was found, or may not be visible to you.');
       return;
     }
-
-    if (note.from !== player.name) {
-      B.sayAt(player, 'You are not the author of that idea.');
-      return;
+    if (board.doRemoveNote(number, player)) {
+      B.sayAt(player, `Idea number ${number} removed.`);
     }
-
-    board.removeNote(number);
-    B.sayAt(player, `Idea number ${number} removed.`);
+    else {
+      B.sayAt(player, "You are unable to remove that idea.  Please ask an Admin.")
+    }
   }
 });
 
@@ -95,11 +93,11 @@ subcommands.add({
   command: state => (args, player, arg0, extraArgs) => {
 
     if (!extraArgs) {
-      if(!args || args.length <= 0) {
+      if (!args || args.length <= 0) {
         B.sayAt(player, "Write an idea about what subject?");
         return;
       }
-      else if(args && args.length > 100) {
+      else if (args && args.length > 100) {
         B.sayAt(player, "An idea's subject should be less than or equal to 100 characters long.")
         return;
       }
@@ -121,8 +119,8 @@ subcommands.add({
       let noteToSend = player.tempIdeaNote;
       player.tempIdeaNote = null;
       noteToSend.body = extraArgs.accumulator;
-      noteToSend.dateWritten = Helper.getCurrentDateString();
-      
+      noteToSend.dateWritten = new Date();
+
       state.BoardManager.getBoard('Ideas').addNote(noteToSend);
 
       B.sayAt(player, "Your idea has been shared, thank you for contributing!");
@@ -150,7 +148,7 @@ subcommands.add({
       }
 
       player.tempIdeaNote = note;
-      extraArgs = { 'typeOfBuffer': 'idea', 'state': 'starting', 'accumulator':note.body};
+      extraArgs = { 'typeOfBuffer': 'idea', 'state': 'starting', 'accumulator': note.body };
       args = 'edit';
     }
     let result = Helper.editorLambda(args, player, arg0, extraArgs);

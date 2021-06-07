@@ -1,0 +1,10 @@
+{
+  "command": "recall",
+  "body": "Return to the waypoint you have saved as your home with 'waypoint home{x'\n",
+  "related": [
+    "waypoint"
+  ],
+  "keywords": [
+    "travel"
+  ]
+}

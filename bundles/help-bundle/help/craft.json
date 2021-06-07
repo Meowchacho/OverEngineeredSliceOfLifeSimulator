@@ -1,0 +1,4 @@
+{
+  "command": "craft",
+  "body": "craft list                  View crafting recipe categories\ncraft list <category #>     List recipes for a given category\ncraft list   <cat #> <item #> View stats and ingredients for a given item\ncraft create <cat #> <item #> Create item viewed with list <#> <#>\n"
+}

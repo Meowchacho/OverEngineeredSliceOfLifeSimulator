@@ -1,0 +1,7 @@
+{
+  "command": "emote",
+  "body": "Send a message to the room.\nYour message may refer to specific players and items with ~<player/item name>.\n",
+  "keywords": [
+    "emote"
+  ]
+}

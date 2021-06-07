@@ -1,0 +1,7 @@
+{
+  "command": "queue",
+  "body": "View current queue of commands for the player\n",
+  "related": [
+    "flush"
+  ]
+}

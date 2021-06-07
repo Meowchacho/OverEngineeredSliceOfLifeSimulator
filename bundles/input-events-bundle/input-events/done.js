@@ -12,10 +12,10 @@ module.exports = {
     let player = args.player;
     player.hydrate(state);
 
-    player.playerClass = PlayerClass.get(player.getMeta('class'));
+   // player.playerClass = PlayerClass.get(player.getMeta('class'));
 
     // Allow the player class to modify the player (adding attributes, changing default prompt, etc)
-    player.playerClass.setupPlayer(state, player);
+   // player.playerClass.setupPlayer(state, player);
 
     player.save();
 

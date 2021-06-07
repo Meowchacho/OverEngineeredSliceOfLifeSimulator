@@ -1,0 +1,11 @@
+{
+  "command": "wear",
+  "body": "Wear an item\n",
+  "related": [
+    "equipment",
+    "remove"
+  ],
+  "keywords": [
+    "loot"
+  ]
+}

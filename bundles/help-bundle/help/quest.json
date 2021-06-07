@@ -1,0 +1,4 @@
+{
+  "command": "quest",
+  "body": "quest log               Show current quests\nquest list npc          List quests for a given NPC\nquest complete number   Complete the given quest\nquest start npc number  Start the given quest by the given NPC\n"
+}

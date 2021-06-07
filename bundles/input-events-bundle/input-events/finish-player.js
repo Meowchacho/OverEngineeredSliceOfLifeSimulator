@@ -39,7 +39,7 @@ module.exports = {
       args.account.addCharacter(args.name);
       state.AccountManager.save(args.account);
 
-      player.setMeta('class', args.playerClass);
+      //player.setMeta('class', args.playerClass);
 
       const room = state.RoomManager.getRoom(startingRoomRef);
       player.room = room;

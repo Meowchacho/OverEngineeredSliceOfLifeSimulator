@@ -1,0 +1,9 @@
+{
+  "command": "remove",
+  "body": "Remove equipped item\n",
+  "related": [
+    "equipment",
+    "inventory",
+    "wear"
+  ]
+}

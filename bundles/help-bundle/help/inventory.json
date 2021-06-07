@@ -1,0 +1,13 @@
+{
+  "command": "inventory",
+  "body": "View current items in your inventory\n",
+  "related": [
+    "equipment",
+    "get",
+    "drop",
+    "put"
+  ],
+  "keywords": [
+    "loot"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "command": "flush",
+  "body": "Flush currently queued commands\n",
+  "related": [
+    "queue"
+  ]
+}

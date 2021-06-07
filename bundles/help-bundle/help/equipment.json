@@ -1,0 +1,12 @@
+{
+  "command": "equipment",
+  "body": "View currently worn equipment\n",
+  "related": [
+    "inventory",
+    "wear",
+    "remove"
+  ],
+  "keywords": [
+    "loot"
+  ]
+}

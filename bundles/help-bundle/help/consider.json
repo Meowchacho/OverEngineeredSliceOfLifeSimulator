@@ -1,0 +1,10 @@
+{
+  "command": "consider",
+  "body": "Size up an enemy to see how difficult a fight against them would be.\n",
+  "related": [
+    "kill"
+  ],
+  "keywords": [
+    "combat"
+  ]
+}

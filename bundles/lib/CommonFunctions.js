@@ -51,6 +51,25 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
+exports.getLongDateString = function(date_ob) {
+  let date = ("0" + date_ob.getDate()).slice(-2);
+  let month = (monthNames[date_ob.getMonth()]);
+  let year = date_ob.getFullYear();
+  let hours = ("0" + date_ob.getHours()).slice(-2);
+  let minutes = ("0" + date_ob.getMinutes()).slice(-2);
+  let gmtOffset = (date_ob.getTimezoneOffset() / 60) + ':00';
+  return `${date} ${month} ${year} ${hours}:${minutes} GMT-${gmtOffset}`;
+}
+
+exports.getShortDateString = function(date_ob) {
+  let date = ("0" + date_ob.getDate()).slice(-2);
+  let month = (monthNames[date_ob.getMonth()]);
+  let hours = ("0" + date_ob.getHours()).slice(-2);
+  let minutes = ("0" + date_ob.getMinutes()).slice(-2);
+
+  return `${date} ${month} ${hours}:${minutes}`;
+}
+
 exports.getCurrentDateString = function () {
   let date_ob = new Date();
 
@@ -60,7 +79,7 @@ exports.getCurrentDateString = function () {
   let hours = ("0" + date_ob.getHours()).slice(-2);
   let minutes = ("0" + date_ob.getMinutes()).slice(-2);
 
-  return `${date} ${month} ${hours}:${minutes}`
+  return `${date} ${month} ${year} ${hours}:${minutes}`;
 }
 exports.tokenizer = function (msg, nTokens) {
   var token = /(\S+)\s*/g, tokens = [], match;
@@ -132,7 +151,7 @@ exports.printNoteList = function (board, player) {
 
   notes.forEach(note => {
     B.sayAt(player, `| ${this.stringTrimmer
-      (note.number.toString(), 6).padEnd(6)} | ${note.dateWritten} | ${this.stringTrimmer(note.from, 13).padEnd(13)} | ${this.stringTrimmer(note.subject, 36).padEnd(36)} |`);
+      (note.number.toString(), 6).padEnd(6)} | ${this.getShortDateString(note.dateWritten)} | ${this.stringTrimmer(note.from, 13).padEnd(13)} | ${this.stringTrimmer(note.subject, 36).padEnd(36)} |`);
   });
   B.sayAt(player, '+' + this.line(78, '-') + '+');
 }

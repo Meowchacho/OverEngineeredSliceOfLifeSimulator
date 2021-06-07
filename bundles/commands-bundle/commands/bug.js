@@ -56,11 +56,11 @@ subcommands.add({
     }
 
     B.sayAt(player, Helper.line(80, '='));
-    B.sayAt(player, `From: ${note.from}`);
+    B.sayAt(player, `From: ${note.from.padEnd(42, ' ')}Date: ${Helper.getLongDateString(note.dateWritten).padStart(26, ' ')}`);
     B.sayAt(player, `Subject: ${note.subject}`);
     B.sayAt(player, `To: ${note.to}`);
     B.sayAt(player, Helper.line(80, '='));
-    note.body.forEach((element)=>{B.sayAt(player, element);});
+    note.body.forEach((element) => { B.sayAt(player, element); });
   }
 });
 
@@ -80,13 +80,12 @@ subcommands.add({
       return;
     }
 
-    if (note.from !== player.name) {
-      B.sayAt(player, 'You are not the author of that bug.');
-      return;
+    if (board.doRemoveNote(number, player)) {
+      B.sayAt(player, `Bug number ${number} removed.`);
     }
-
-    board.removeNote(number);
-    B.sayAt(player, `Bug number ${number} removed.`);
+    else {
+      B.sayAt(player, "You are unable to remove that bug. Please ask an Admin.")
+    }
   }
 });
 
@@ -95,11 +94,11 @@ subcommands.add({
   command: state => (args, player, arg0, extraArgs) => {
 
     if (!extraArgs) {
-      if(!args || args.length <= 0) {
+      if (!args || args.length <= 0) {
         B.sayAt(player, "Write an bug about what subject?");
         return;
       }
-      else if(args && args.length > 100) {
+      else if (args && args.length > 100) {
         B.sayAt(player, "An bug's subject should be less than or equal to 100 characters long.")
         return;
       }
@@ -121,7 +120,7 @@ subcommands.add({
       let noteToSend = player.tempBugNote;
       player.tempBugNote = null;
       noteToSend.body = extraArgs.accumulator;
-      noteToSend.dateWritten = Helper.getCurrentDateString();
+      noteToSend.dateWritten = new Date();
 
       state.BoardManager.getBoard('Bugs').addNote(noteToSend);
 
@@ -150,7 +149,7 @@ subcommands.add({
       }
 
       player.tempBugNote = note;
-      extraArgs = { 'typeOfBuffer': 'bug', 'state': 'starting', 'accumulator':note.body};
+      extraArgs = { 'typeOfBuffer': 'bug', 'state': 'starting', 'accumulator': note.body };
       args = 'edit';
     }
     let result = Helper.editorLambda(args, player, arg0, extraArgs);

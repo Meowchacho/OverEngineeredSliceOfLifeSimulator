@@ -1,0 +1,4 @@
+{
+  "command": "config",
+  "body": "Modify configuration settings\n\nExtended usage\nconfig list               - List configured settings\nconfig set setting value  - Change setting value\n\nPossible Settings / Values \nautoloot    - (on / off)\nbrief       - (on / off)\nminimap     - (on / off)\n\nExample\nconfig set autoloot on  - Turn on autoloot\n"
+}

@@ -1,0 +1,11 @@
+{
+  "command": "shop",
+  "body": "To use the shop commands you have to be in a shop.\n\nlist            - List items the vendor has for sale.\nlist <search>   - View details of an item for sale, e.g., 'list 2.sword{x'\nbuy <item>      - Purchase an item for sale.\nappraise <item> - Ask the vendor how much an item is worth.\nsell <item>     - Sell an item.\n",
+  "keywords": [
+    "shopping",
+    "shops",
+    "vendors",
+    "sell",
+    "buy"
+  ]
+}
