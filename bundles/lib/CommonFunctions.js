@@ -7,6 +7,11 @@
 const { Config, BroadcastSystem: B } = require('ranvier');
 const { Logger } = require('winston');
 const wrap = require('wrap-ansi');
+const Tables = require('./Tables');
+const Tablette = require('./Tablette');
+const TextCell = require('./TextCell').TextCell;
+const TextCells = require('./TextCell').ALIGN;
+
 /**
  * @param {string} name
  * @return {boolean}
@@ -51,7 +56,7 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
-exports.getLongDateString = function(date_ob) {
+exports.getLongDateString = function (date_ob) {
   let date = ("0" + date_ob.getDate()).slice(-2);
   let month = (monthNames[date_ob.getMonth()]);
   let year = date_ob.getFullYear();
@@ -61,7 +66,7 @@ exports.getLongDateString = function(date_ob) {
   return `${date} ${month} ${year} ${hours}:${minutes} GMT-${gmtOffset}`;
 }
 
-exports.getShortDateString = function(date_ob) {
+exports.getShortDateString = function (date_ob) {
   let date = ("0" + date_ob.getDate()).slice(-2);
   let month = (monthNames[date_ob.getMonth()]);
   let hours = ("0" + date_ob.getHours()).slice(-2);
@@ -127,60 +132,159 @@ exports.line = function (width, fillChar = "-", color = null) {
   return openColor + (new Array(width + 1)).join(fillChar) + closeColor;
 }
 
+exports.rawLength = function (string) {
+  return string.replace(/{\w/ig, '').length;
+}
+
 exports.printInitialBufferHelp = function (type, player) {
+  let lineLengthOverall = player.getMeta('config.line_length') || 80; //player.something
+
   B.sayAt(player, `You are now editing your ${type}.`);
-  B.sayAt(player, '+' + this.line(78, '-') + '+');
-  B.sayAt(player, '| {WEditor help:{x                                                                 |', '', '', 90);
-  B.sayAt(player, '| The following can be typed on an empty line:                                 |', '', '', 90);
-  B.sayAt(player, '|                                                                              |', '', '', 90);
-  B.sayAt(player, '|    {W.h{x : help                                                                 |', '', '', 90);
-  B.sayAt(player, '|    {W.f{x : format the buffer                                                    |', '', '', 90);
-  B.sayAt(player, '|    {W.c{x : clears the buffer                                                    |', '', '', 90);
-  B.sayAt(player, '|    {W.s{x : show the buffer         {W.dl{x <line number>        : delete a line     |', '', '', 90);
-  B.sayAt(player, '|    {W.q{X : abort and exit          {W.il{x <line number> <text> : insert a line     |', '', '', 90);
-  B.sayAt(player, '|     {W@{x : save and exit           {W.rl{x <line number> <text> : replace a line    |', '', '', 90);
-  B.sayAt(player, '+' + this.line(78, '-') + '+');
+  B.sayAt(player, this.line(lineLengthOverall, '-'));
+
+  var tt = new Tablette();
+  tt.readTable(Tables.bufferHelpHeader, lineLengthOverall);
+
+  let cells = tt.getRange('7:1-9:2');
+  cells.forEach((element) => {
+    if (element.y == 1) {
+      element.size = Math.round((lineLengthOverall) * 0.3);
+      element.align = element.ALIGNS.DOTLEFT;
+    }
+    else {
+      element.size = Math.round((lineLengthOverall) * 0.7);
+      element.align = element.ALIGNS.DOTRIGHT;
+    }
+  });
+  tt.getAndSetMaxes(cells.filter(element => element.y == 1));
+  tt.getAndSetMaxes(cells.filter(element => element.y == 2));
+  tt.getPrintableArray().forEach((line) => {
+    B.sayAt(player, line);
+  });
+  B.sayAt(player, this.line(lineLengthOverall, '-'));
 }
 
 exports.printNoteList = function (board, player) {
+  let lineLengthOverall = player.getMeta('config.line_length') || 80; //player.something
+
   let notes = board.getAllNotes(player);
 
-  B.sayAt(player, '+' + this.line(78, '-') + '+');
-  B.sayAt(player, '| Number | Date/Time    | Author        | Subject                              |');
-  B.sayAt(player, '+' + this.line(78, '-') + '+');
+  var tt = new Tablette();
+  tt.addCell(1, 1, new TextCell(this.line(lineLengthOverall, '-'), lineLengthOverall));
+  tt.addCell(2, 1, new TextCell('{WNumber{x', lineLengthOverall));
+  tt.addCell(2, 2, new TextCell('{WDate/Time{x', lineLengthOverall));
+  tt.addCell(2, 3, new TextCell('{WAuthor{x', lineLengthOverall));
+  tt.addCell(2, 4, new TextCell('{WSubject{x', lineLengthOverall));
+  tt.addCell(3, 1, new TextCell(this.line(lineLengthOverall, '-'), lineLengthOverall));
 
-  notes.forEach(note => {
-    B.sayAt(player, `| ${this.stringTrimmer
-      (note.number.toString(), 6).padEnd(6)} | ${this.getShortDateString(note.dateWritten)} | ${this.stringTrimmer(note.from, 13).padEnd(13)} | ${this.stringTrimmer(note.subject, 36).padEnd(36)} |`);
+  let noteCounter = 4;
+  notes.forEach((note, index) => {
+    tt.addCell(index + noteCounter, 2, new TextCell(this.getShortDateString(note.dateWritten), lineLengthOverall));
+    tt.addCell(index + noteCounter, 3, new TextCell(note.from, lineLengthOverall));
+    tt.addCell(index + noteCounter, 4, new TextCell(note.subject, lineLengthOverall));
+
   });
-  B.sayAt(player, '+' + this.line(78, '-') + '+');
+
+  let cells = tt.getRange(`2:1-2:4`);
+  cells.forEach((element) => {
+    if (element.y == 1) {
+      element.size = Math.round((lineLengthOverall) * 0.1);
+      element.align = element.ALIGNS.LEFT;
+      element._text = this.stringTrimmer(element._text, element.size);
+    }
+    else if (element.y == 2) {
+      element.size = Math.round((lineLengthOverall) * 0.18);
+      element.align = element.ALIGNS.LEFT;
+      element._text = this.stringTrimmer(element._text, element.size);
+    }
+    else if (element.y == 3) {
+      element.size = Math.round((lineLengthOverall) * 0.15);
+      element.align = element.ALIGNS.LEFT;
+      element._text = this.stringTrimmer(element._text, element.size);
+    }
+    else if (element.y == 4) {
+      element.size = Math.round((lineLengthOverall) * 0.57);
+      element.align = element.ALIGNS.LEFT;
+      element._text = this.stringTrimmer(element._text, element.size);
+    }
+  });
+
+
+  cells = tt.getRange(`${noteCounter}:1-${noteCounter + notes.size + 1}:4`);
+  cells.forEach((element) => {
+    if (element.y == 1) {
+      element.size = Math.round((lineLengthOverall) * 0.1);
+      element.align = element.ALIGNS.LEFT;
+      element._text = this.stringTrimmer(element._text, element.size);
+    }
+    else if (element.y == 2) {
+      element.size = Math.round((lineLengthOverall) * 0.18);
+      element.align = element.ALIGNS.LEFT;
+      element._text = this.stringTrimmer(element._text, element.size);
+    }
+    else if (element.y == 3) {
+      element.size = Math.round((lineLengthOverall) * 0.15);
+      element.align = element.ALIGNS.LEFT;
+      element._text = this.stringTrimmer(element._text, element.size);
+    }
+    else if (element.y == 4) {
+      element.size = Math.round((lineLengthOverall) * 0.57);
+      element.align = element.ALIGNS.LEFT;
+      element._text = this.stringTrimmer(element._text, element.size);
+    }
+  });
+
+  tt.getPrintableArray().forEach((line) => {
+    B.sayAt(player, line);
+  });
 }
 exports.printBufferHelp = function (type, player) {
-  B.sayAt(player, '+' + this.line(78, '-') + '+');
-  B.sayAt(player, '| ~ Editor help ~                                                              |', '', '', 90);
-  B.sayAt(player, '+' + this.line(78, '-') + '+');
-  B.sayAt(player, `You are currently in the ${type} editor.`, '', '', 90);
-  B.sayAt(player, '', '', '', 90);
-  B.sayAt(player, 'Aside from commands starting with a period, or the \'@\' command, any text that', '', '', 90);
-  B.sayAt(player, 'you send will be added to the buffer.', '', '', 90);
-  B.sayAt(player, '', '', '', 90);
-  B.sayAt(player, 'The following commands are available:', '', '', 90);
-  B.sayAt(player, '   .c  : clears the entire buffer', '', '', 90);
-  B.sayAt(player, '   .dl : deletes the specified line (for example, "{G.dl 3{x" deletes line number 3)', '', '', 90);
-  B.sayAt(player, '   .f  : neatly formats the buffer\'s contents', '', '', 90);
-  B.sayAt(player, '   .h  : shows this help message', '', '', 90);
-  B.sayAt(player, '   .il : inserts a line (for example, "{G.il 1 This is the new first line.{x")', '', '', 90);
-  B.sayAt(player, '   .q  : quits the editor without saving your changes', '', '', 90);
-  B.sayAt(player, '   .rl : replaces a line (for example, "{G.rl 1 This replaces line 1.{x")', '', '', 90);
-  B.sayAt(player, '   .s  : shows the current contents of the buffer', '', '', 90);
-  B.sayAt(player, '    @  : saves your changes and quits the editor', '', '', 90);
-  B.sayAt(player, '', '', '', 90);
-  B.sayAt(player, 'If you are confused, type .q to abort without changing anything.', '', '', 90);
+  let lineLengthOverall = player.getMeta('config.line_length') || 80;
+
+  B.sayAt(player, '+' + this.line(lineLengthOverall - 2, '-') + '+');
+  let hackLine = '~Editor help~';
+  let pad = ' ';
+  hackLine = pad.repeat(Math.round((lineLengthOverall - (4 + hackLine.length)) / 2)) + hackLine;
+  hackLine = hackLine + pad.repeat(lineLengthOverall - (4 + hackLine.length));
+  B.sayAt(player, '| ' + hackLine + ' |');
+  B.sayAt(player, '+' + this.line(lineLengthOverall - 2, '-') + '+');
+  B.sayAt(player, `You are currently in the ${type} editor.`, '', '', lineLengthOverall);
+  B.sayAt(player, this.line(lineLengthOverall, ' '));
+
+  var tt = new Tablette();
+  tt.readTable(Tables.bufferHelpCommand, lineLengthOverall);
+
+  let cells = tt.getRange('5:1-13:1');
+  cells.forEach((element) => {
+    element.align = element.ALIGNS.DOTLEFT;
+  });
+  tt.getAndSetMaxes(cells);
+
+  tt.getPrintableArray().forEach((line) => {
+    B.sayAt(player, line);
+  });
+
 }
 exports.stringTrimmer = function (string, length) {
-  if (!string) { string = 'No Subject' };
-  var trimmedString = string.length > length ? string.substring(0, length - 3) + "..." : string;
-  return trimmedString;
+  if (!string) { string = '' };
+
+  let result = string;
+
+  if (this.rawLength(result) > length) {
+    while (this.rawLength(result) > (length - 3)) {
+      if (result.slice(-2).match(/\{\w/)) {
+        result = result.slice(0, -2);
+      }
+      else {
+        result = result.slice(0, -1);
+      }
+    }
+
+    return result + '...';
+  }
+  else {
+    return result
+  }
 }
 
 exports.editorLambda = function (args, player, arg0, extraArgs) {
