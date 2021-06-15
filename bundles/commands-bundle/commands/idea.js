@@ -138,12 +138,17 @@ subcommands.add({
         B.sayAt(player, 'Edit which idea?');
         return;
       }
-      let number = parseInt(args[0])
+      let number = parseInt(args)
       let board = state.BoardManager.getBoard('Ideas');
       let note = board.getNote(number, player);
 
-      if (note.from !== player.name) {
-        B.sayAt(player, 'You are not the author of that idea');
+      if (!note) {
+        B.sayAt(player, 'No idea with that number was found, or may not be visible to you.');
+        return;
+      }
+
+      if (!board.canEditNote(number, player)) {
+        B.sayAt(player, 'You are not the author of that idea.');
         return;
       }
 
@@ -151,6 +156,7 @@ subcommands.add({
       extraArgs = { 'typeOfBuffer': 'idea', 'state': 'starting', 'accumulator': note.body };
       args = 'edit';
     }
+
     let result = Helper.editorLambda(args, player, arg0, extraArgs);
 
     if (result && result.state === 'finishing') {

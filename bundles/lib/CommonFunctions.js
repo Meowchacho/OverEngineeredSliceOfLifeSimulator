@@ -178,12 +178,13 @@ exports.printNoteList = function (board, player) {
   tt.addCell(3, 1, new TextCell(this.line(lineLengthOverall, '-'), lineLengthOverall));
 
   let noteCounter = 4;
-  notes.forEach((note, index) => {
-    tt.addCell(index + noteCounter, 2, new TextCell(this.getShortDateString(note.dateWritten), lineLengthOverall));
-    tt.addCell(index + noteCounter, 3, new TextCell(note.from, lineLengthOverall));
-    tt.addCell(index + noteCounter, 4, new TextCell(note.subject, lineLengthOverall));
-
-  });
+  notes.forEach((note) => {
+    tt.addCell(noteCounter, 1, new TextCell(note.number.toString(), lineLengthOverall));
+    tt.addCell(noteCounter, 2, new TextCell(this.getShortDateString(note.dateWritten), lineLengthOverall));
+    tt.addCell(noteCounter, 3, new TextCell(note.from, lineLengthOverall));
+    tt.addCell(noteCounter, 4, new TextCell(note.subject, lineLengthOverall));
+    noteCounter++;
+  }, this);
 
   let cells = tt.getRange(`2:1-2:4`);
   cells.forEach((element) => {
@@ -210,7 +211,7 @@ exports.printNoteList = function (board, player) {
   });
 
 
-  cells = tt.getRange(`${noteCounter}:1-${noteCounter + notes.size + 1}:4`);
+  cells = tt.getRange(`4:1-${noteCounter}:4`);
   cells.forEach((element) => {
     if (element.y == 1) {
       element.size = Math.round((lineLengthOverall) * 0.1);
