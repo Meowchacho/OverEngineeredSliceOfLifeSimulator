@@ -10,7 +10,7 @@ class TextCell {
         this.x = 0;
         this.y = 0;
 
-        if (text == null) {
+        if (!text || text == null || text === 'undefined') {
             text = '';
         }
         let [localPre,localPost] = text.split(':');

@@ -1,8 +1,8 @@
 'use strict';
 const { BroadcastSystem: B, CommandManager, Note } = require('ranvier');
 const Ranvier = require('ranvier');
-const Helper = require('../../lib/CommonFunctions')
-
+const Helper = require('../../lib/CommonFunctions');
+const Editor = require('../../lib/Editor');
 module.exports = {
   usage: 'bug <list / write / edit # / read #>',
   aliases: ['bugs', 'sysbug'],
@@ -60,7 +60,12 @@ subcommands.add({
     B.sayAt(player, `Subject: ${note.subject}`);
     B.sayAt(player, `To: ${note.to}`);
     B.sayAt(player, Helper.line(80, '='));
-    note.body.forEach((element) => { B.sayAt(player, element); });
+    if (Array.isArray(note.body)) {
+      note.body.forEach((element) => { B.sayAt(player, element, '', '', player.getMeta('config.line_wrap')); });
+    }
+    else {
+      B.sayAt(player, note.body, '', '', player.getMeta('config.line_wrap'));
+    }
   }
 });
 
@@ -92,7 +97,6 @@ subcommands.add({
 subcommands.add({
   name: 'write',
   command: state => (args, player, arg0, extraArgs) => {
-
     if (!extraArgs) {
       if (!args || args.length <= 0) {
         B.sayAt(player, "Write an bug about what subject?");
@@ -102,7 +106,6 @@ subcommands.add({
         B.sayAt(player, "An bug's subject should be less than or equal to 100 characters long.")
         return;
       }
-
       let tempNote = new Note();
       tempNote.board = 'Bugs';
       tempNote.to = 'all';
@@ -110,66 +113,59 @@ subcommands.add({
       tempNote.number = state.BoardManager.getBoard('Bugs').getNextNoteNumber();
       tempNote.subject = args;
       player.tempBugNote = tempNote;
-      extraArgs = { 'typeOfBuffer': 'bug', 'state': 'starting' };
-      args = 'write';
-    }
 
-    let result = Helper.editorLambda(args, player, arg0, extraArgs);
-
-    if (result && result.state === 'finishing') {
-      let noteToSend = player.tempBugNote;
-      player.tempBugNote = null;
-      noteToSend.body = extraArgs.accumulator;
-      noteToSend.dateWritten = new Date();
-
-      state.BoardManager.getBoard('Bugs').addNote(noteToSend);
-
-      B.sayAt(player, "Your bug has been shared, thank you for contributing!");
+      let data = {
+        type: 'bug',
+        loggerName: 'Bug_Command',
+        callback: finalizeBug,
+        existingBuffer: ''
+      }
+      Editor.enterEditor(player, data);
       return;
     }
-    return result;
   }
 });
 
 subcommands.add({
   name: 'edit',
   command: state => (args, player, arg0, extraArgs) => {
-    if (!extraArgs) {
-      if (!args || !args.length) {
-        B.sayAt(player, 'Edit which bug?');
-        return;
-      }
-      let number = parseInt(args)
-      let board = state.BoardManager.getBoard('Bugs');
-      let note = board.getNote(number, player);
-
-      if (!note) {
-        B.sayAt(player, 'No bug with that number was found, or may not be visible to you.');
-        return;
-      }
-
-      if (!board.canEditNote(number, player)) {
-        B.sayAt(player, 'You are not the author of that bug.');
-        return;
-      }
-
-      player.tempBugNote = note;
-      extraArgs = { 'typeOfBuffer': 'bug', 'state': 'starting', 'accumulator': note.body };
-      args = 'edit';
-    }
-
-    let result = Helper.editorLambda(args, player, arg0, extraArgs);
-
-    if (result && result.state === 'finishing') {
-      B.sayAt(player, "Your bug has been edited, thank you for contributing!");
-      let noteToSend = player.tempBugNote;
-      player.tempBugNote = null;
-
-      noteToSend.body = extraArgs.accumulator;
-      state.BoardManager.getBoard('Bugs').addNote(noteToSend);
+    if (!args || !args.length) {
+      B.sayAt(player, 'Edit which bug?');
       return;
     }
-    return result;
+    let number = parseInt(args)
+    let board = state.BoardManager.getBoard('Bugs');
+    let note = board.getNote(number, player);
 
+    if (!note) {
+      B.sayAt(player, 'No bug with that number was found, or may not be visible to you.');
+      return;
+    }
+
+    if (!board.canEditNote(number, player)) {
+      B.sayAt(player, 'You are not the author of that bug.');
+      return;
+    }
+
+    player.tempBugNote = note;
+    let data = {
+      type: 'bug',
+      loggerName: 'Bug_Command',
+      callback: finalizeBug,
+      existingBuffer: note.body
+    }
+    Editor.enterEditor(player, data);
+    return;
   }
 });
+
+const finalizeBug = function (state, player, body) {
+  let noteToSend = player.tempBugNote;
+  player.tempBugNote = null;
+  noteToSend.body = body;
+  noteToSend.dateWritten = new Date();
+
+  state.BoardManager.getBoard('Bugs').addNote(noteToSend);
+  B.sayAt(player, "Your bug has been shared, thank you for contributing!");
+  return;
+};

@@ -11,7 +11,12 @@ const { CommandParser, InvalidCommandError, RestrictedCommandError } = require('
 module.exports = {
   event: state => player => {
     player.socket.once('data', data => {
-      function loop () {
+      function loop() {
+        // start bypass
+        if (player.otherInput) {
+          player.otherInput = false;
+          return;
+        } // end bypass
         player.socket.emit('commands', player);
       }
       data = data.toString().trim();
@@ -113,16 +118,16 @@ module.exports = {
           }
         }
       } catch (error) {
-        switch(true) {
+        switch (true) {
           case error instanceof InvalidCommandError:
             if (player.room && player.room instanceof Room) {
-                // check to see if room has a matching context-specific command
-                const roomCommands = player.room.getMeta('commands');
-                const [commandName, ...args] = data.split(' ');
-                if (roomCommands && roomCommands.includes(commandName)) {
-                  player.room.emit('command', player, commandName, args.join(' '));
-                  break;
-                }
+              // check to see if room has a matching context-specific command
+              const roomCommands = player.room.getMeta('commands');
+              const [commandName, ...args] = data.split(' ');
+              if (roomCommands && roomCommands.includes(commandName)) {
+                player.room.emit('command', player, commandName, args.join(' '));
+                break;
+              }
             }
 
             B.sayAt(player, "Huh?");
@@ -136,7 +141,9 @@ module.exports = {
         }
       }
 
-      B.prompt(player);
+      if (!player.otherInput) {
+        B.prompt(player);
+      }
       loop();
     });
   }

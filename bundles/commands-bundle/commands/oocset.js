@@ -8,17 +8,20 @@ module.exports = {
   usage: '@set [setting] [value]',
   aliases: ['@set'],
   command: (state) => (args, player) => {
-    const possibleSettings = ['line-length'];
+    const possibleSettings = ['line-length', 'line-wrap'];
     const settingAliases = new Map();
     settingAliases.set('line-length', 'line_length');
+    settingAliases.set('line-wrap', 'line_wrap');
 
-    let currLineLength = player.getMeta('config.line_length')
+    let currLineLength = player.getMeta('config.line_length');
+    let currLineWrap = player.getMeta('config.line_wrap');
 
     if (!args.length) {
       const currentConfigs = [
         ['{WSetting{x', `{WValue{x`, '{WDescription of setting{x'],
         [Helper.line(currLineLength, '-')],
-        ['line-length', `${currLineLength}`, 'The maximum line length of tables and headers.']
+        ['line-length', `${currLineLength}`, 'The maximum line length of tables and headers.'],
+        ['line-wrap', `${currLineWrap}`, 'The length lines should wrap at.']
       ];
 
       B.sayAt(player, Helper.line(currLineLength, '-'));
@@ -74,6 +77,20 @@ module.exports = {
 
       if (isNaN(intValue) || intValue < 80 || intValue > 300) { //|| intValue % 2 != 0) {
         B.sayAt(player, `Line length must be between 80 and 300 characters.`);
+        return;
+      }
+
+      if (!player.getMeta('config')) {
+        player.setMeta('config', {});
+      }
+
+      player.setMeta(`config.${settingAliases.get(configToSet)}`, intValue);
+    }
+    else if (configToSet === 'line-wrap') {
+      let intValue = parseInt(valueToSet);
+
+      if (isNaN(intValue) || intValue < 80 || intValue > 300) {
+        B.sayAt(player, `Line wrap must be between 80 and 300 characters.`);
         return;
       }
 

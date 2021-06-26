@@ -2,6 +2,7 @@
 
 const { BroadcastSystem: B, Logger} = require('ranvier');
 const Helper = require('../../lib/CommonFunctions');
+const Editor = require('../../lib/Editor');
 
 /* To implement a modal command (specifically via the example-input-events bundle)
  * have your command's function return a value. That value will put the player in that
@@ -10,18 +11,21 @@ const Helper = require('../../lib/CommonFunctions');
 module.exports = {
   usage: 'description',
   aliases: ['desc'],
-  command: state => (args, player, arg0, extraArgs) => {
-
-    if (!extraArgs) {
-      extraArgs = {'typeOfBuffer':'description','accumulator':player.description._longDescription || null, 'state':'starting'};
+  command: state => (args, player) => {
+    let data = {
+      type: 'description',
+      loggerName: 'Description_Command',
+      callback: finalizeDescription,
+      existingBuffer: player.description.longDescription || ''
     }
-    let result = Helper.editorLambda(args,player,arg0,extraArgs);
-    if(result && result.state === 'finishing') {
-      player.description._longDescription = extraArgs.accumulator;
-      player.save();
-      return;
-    }
-    return result;
+    Editor.enterEditor(player, data);
+    return;
   }
 };
 
+const finalizeDescription = function (state, player, desc) {
+  player.description._longDescription = desc;
+  B.sayAt(player, `You've set your description.`);
+  player.save();
+  return;
+};

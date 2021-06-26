@@ -1,7 +1,8 @@
 'use strict';
 const { BroadcastSystem: B, CommandManager, Note } = require('ranvier');
 const Ranvier = require('ranvier');
-const Helper = require('../../lib/CommonFunctions')
+const Helper = require('../../lib/CommonFunctions');
+const Editor = require('../../lib/Editor');
 
 module.exports = {
   usage: 'idea <list / write / edit # / read #>',
@@ -60,7 +61,12 @@ subcommands.add({
     B.sayAt(player, `Subject: ${note.subject}`);
     B.sayAt(player, `To: ${note.to}`);
     B.sayAt(player, Helper.line(80, '='));
-    note.body.forEach((element) => { B.sayAt(player, element); });
+    if (Array.isArray(note.body)) {
+      note.body.forEach((element) => { B.sayAt(player, element, '', '', player.getMeta('config.line_wrap')); });
+    }
+    else {
+      B.sayAt(player, note.body, '', '', player.getMeta('config.line_wrap'));
+    }
   }
 });
 
@@ -79,11 +85,12 @@ subcommands.add({
       B.sayAt(player, 'No idea with that number was found, or may not be visible to you.');
       return;
     }
+
     if (board.doRemoveNote(number, player)) {
       B.sayAt(player, `Idea number ${number} removed.`);
     }
     else {
-      B.sayAt(player, "You are unable to remove that idea.  Please ask an Admin.")
+      B.sayAt(player, "You are unable to remove that idea. Please ask an Admin.")
     }
   }
 });
@@ -91,7 +98,6 @@ subcommands.add({
 subcommands.add({
   name: 'write',
   command: state => (args, player, arg0, extraArgs) => {
-
     if (!extraArgs) {
       if (!args || args.length <= 0) {
         B.sayAt(player, "Write an idea about what subject?");
@@ -101,7 +107,6 @@ subcommands.add({
         B.sayAt(player, "An idea's subject should be less than or equal to 100 characters long.")
         return;
       }
-
       let tempNote = new Note();
       tempNote.board = 'Ideas';
       tempNote.to = 'all';
@@ -109,66 +114,59 @@ subcommands.add({
       tempNote.number = state.BoardManager.getBoard('Ideas').getNextNoteNumber();
       tempNote.subject = args;
       player.tempIdeaNote = tempNote;
-      extraArgs = { 'typeOfBuffer': 'idea', 'state': 'starting' };
-      args = 'write';
-    }
 
-    let result = Helper.editorLambda(args, player, arg0, extraArgs);
-
-    if (result && result.state === 'finishing') {
-      let noteToSend = player.tempIdeaNote;
-      player.tempIdeaNote = null;
-      noteToSend.body = extraArgs.accumulator;
-      noteToSend.dateWritten = new Date();
-
-      state.BoardManager.getBoard('Ideas').addNote(noteToSend);
-
-      B.sayAt(player, "Your idea has been shared, thank you for contributing!");
+      let data = {
+        type: 'idea',
+        loggerName: 'Idea_Command',
+        callback: finalizeIdea,
+        existingBuffer: ''
+      }
+      Editor.enterEditor(player, data);
       return;
     }
-    return result;
   }
 });
 
 subcommands.add({
   name: 'edit',
   command: state => (args, player, arg0, extraArgs) => {
-    if (!extraArgs) {
-      if (!args || !args.length) {
-        B.sayAt(player, 'Edit which idea?');
-        return;
-      }
-      let number = parseInt(args)
-      let board = state.BoardManager.getBoard('Ideas');
-      let note = board.getNote(number, player);
-
-      if (!note) {
-        B.sayAt(player, 'No idea with that number was found, or may not be visible to you.');
-        return;
-      }
-
-      if (!board.canEditNote(number, player)) {
-        B.sayAt(player, 'You are not the author of that idea.');
-        return;
-      }
-
-      player.tempIdeaNote = note;
-      extraArgs = { 'typeOfBuffer': 'idea', 'state': 'starting', 'accumulator': note.body };
-      args = 'edit';
-    }
-
-    let result = Helper.editorLambda(args, player, arg0, extraArgs);
-
-    if (result && result.state === 'finishing') {
-      B.sayAt(player, "Your idea has been edited, thank you for contributing!");
-      let noteToSend = player.tempIdeaNote;
-      player.tempIdeaNote = null;
-
-      noteToSend.body = extraArgs.accumulator;
-      state.BoardManager.getBoard('Ideas').addNote(noteToSend);
+    if (!args || !args.length) {
+      B.sayAt(player, 'Edit which idea?');
       return;
     }
-    return result;
+    let number = parseInt(args)
+    let board = state.BoardManager.getBoard('Ideas');
+    let note = board.getNote(number, player);
 
+    if (!note) {
+      B.sayAt(player, 'No idea with that number was found, or may not be visible to you.');
+      return;
+    }
+
+    if (!board.canEditNote(number, player)) {
+      B.sayAt(player, 'You are not the author of that idea.');
+      return;
+    }
+
+    player.tempIdeaNote = note;
+    let data = {
+      type: 'idea',
+      loggerName: 'Idea_Command',
+      callback: finalizeIdea,
+      existingBuffer: note.body
+    }
+    Editor.enterEditor(player, data);
+    return;
   }
 });
+
+const finalizeIdea = function (state, player, body) {
+  let noteToSend = player.tempIdeaNote;
+  player.tempIdeaNote = null;
+  noteToSend.body = body;
+  noteToSend.dateWritten = new Date();
+
+  state.BoardManager.getBoard('Ideas').addNote(noteToSend);
+  B.sayAt(player, "Your idea has been shared, thank you for contributing!");
+  return;
+};
